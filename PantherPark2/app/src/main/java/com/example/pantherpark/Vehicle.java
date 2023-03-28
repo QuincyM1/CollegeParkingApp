@@ -20,7 +20,7 @@ public class Vehicle {
         this.vin = 0;
     }
 
-    public Vehicle(String manufacterer, String model, int year, String color,
+    public Vehicle(String manufacturer, String model, int year, String color,
                    String licensePlate, int vin) {
         this.manufacturer = manufacturer;
         this.model = model;
