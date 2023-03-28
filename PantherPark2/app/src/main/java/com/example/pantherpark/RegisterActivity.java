@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    //
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;

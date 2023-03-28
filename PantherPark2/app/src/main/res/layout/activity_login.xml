@@ -8,6 +8,8 @@
     android:padding="16dp"
     tools:context=".LoginActivity">
 
+    <!---->
+
     <EditText
         android:id="@+id/email_edit_text"
         android:layout_width="match_parent"
