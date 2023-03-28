@@ -11,6 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PantherPark"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDzo9AHgxmFpCtqBtvfXd0r6b0FCPv27Vw"></meta-data>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
