@@ -1,11 +1,52 @@
-type TestModel2 @model @auth(rules: [{allow: public}]) {
+type Sensor @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String
-  accountnum: Int
+  ModelNumber: Int
+  SerialNumber: Int
+  Status: Int!
+  Spot: Spot @hasOne
 }
 
-type UntitledModel @model @auth(rules: [{allow: public}]) {
+type Spot @model @auth(rules: [{allow: public}]) {
   id: ID!
-  untitledfield: String
+  Code: String!
+  HandicapOnly: Boolean!
+  ReservationStatus: Int
+  DeckID: ID! @index(name: "byDeck")
+}
+
+type Card @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  CardNumber: String!
+  CardVerificationValue: Int!
+  ExpDate: String!
+  BillingName: String!
+  userID: ID! @index(name: "byUser")
+}
+
+type Address @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Street: String
+  City: String
+  State: String
+  Zip: String
+}
+
+type Deck @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  DeckName: String
+  Levels: Int
+  Latitude: String
+  Longitude: String
+  SpotCount: Int
+  DeckAddress: Address @hasOne
+  Spots: [Spot] @hasMany(indexName: "byDeck", fields: ["id"])
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  FName: String
+  LName: String
+  UserType: String
+  UserCards: [Card] @hasMany(indexName: "byUser", fields: ["id"])
 }
  

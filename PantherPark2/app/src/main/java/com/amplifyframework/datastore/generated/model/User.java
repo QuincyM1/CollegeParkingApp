@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasMany;
 import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
@@ -19,16 +20,21 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the UntitledModel type in your schema. */
+/** This is an auto generated class representing the User type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "UntitledModels", type = Model.Type.USER, version = 1, authRules = {
+@ModelConfig(pluralName = "Users", type = Model.Type.USER, version = 1, authRules = {
   @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
 })
-public final class UntitledModel implements Model {
-  public static final QueryField ID = field("UntitledModel", "id");
-  public static final QueryField UNTITLEDFIELD = field("UntitledModel", "untitledfield");
+public final class User implements Model {
+  public static final QueryField ID = field("User", "id");
+  public static final QueryField F_NAME = field("User", "FName");
+  public static final QueryField L_NAME = field("User", "LName");
+  public static final QueryField USER_TYPE = field("User", "UserType");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String") String untitledfield;
+  private final @ModelField(targetType="String") String FName;
+  private final @ModelField(targetType="String") String LName;
+  private final @ModelField(targetType="String") String UserType;
+  private final @ModelField(targetType="Card") @HasMany(associatedWith = "userID", type = Card.class) List<Card> UserCards = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -39,8 +45,20 @@ public final class UntitledModel implements Model {
       return id;
   }
   
-  public String getUntitledfield() {
-      return untitledfield;
+  public String getFName() {
+      return FName;
+  }
+  
+  public String getLName() {
+      return LName;
+  }
+  
+  public String getUserType() {
+      return UserType;
+  }
+  
+  public List<Card> getUserCards() {
+      return UserCards;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -51,9 +69,11 @@ public final class UntitledModel implements Model {
       return updatedAt;
   }
   
-  private UntitledModel(String id, String untitledfield) {
+  private User(String id, String FName, String LName, String UserType) {
     this.id = id;
-    this.untitledfield = untitledfield;
+    this.FName = FName;
+    this.LName = LName;
+    this.UserType = UserType;
   }
   
   @Override
@@ -63,11 +83,13 @@ public final class UntitledModel implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      UntitledModel untitledModel = (UntitledModel) obj;
-      return ObjectsCompat.equals(getId(), untitledModel.getId()) &&
-              ObjectsCompat.equals(getUntitledfield(), untitledModel.getUntitledfield()) &&
-              ObjectsCompat.equals(getCreatedAt(), untitledModel.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), untitledModel.getUpdatedAt());
+      User user = (User) obj;
+      return ObjectsCompat.equals(getId(), user.getId()) &&
+              ObjectsCompat.equals(getFName(), user.getFName()) &&
+              ObjectsCompat.equals(getLName(), user.getLName()) &&
+              ObjectsCompat.equals(getUserType(), user.getUserType()) &&
+              ObjectsCompat.equals(getCreatedAt(), user.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), user.getUpdatedAt());
       }
   }
   
@@ -75,7 +97,9 @@ public final class UntitledModel implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getUntitledfield())
+      .append(getFName())
+      .append(getLName())
+      .append(getUserType())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -85,9 +109,11 @@ public final class UntitledModel implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("UntitledModel {")
+      .append("User {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("untitledfield=" + String.valueOf(getUntitledfield()) + ", ")
+      .append("FName=" + String.valueOf(getFName()) + ", ")
+      .append("LName=" + String.valueOf(getLName()) + ", ")
+      .append("UserType=" + String.valueOf(getUserType()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -106,39 +132,61 @@ public final class UntitledModel implements Model {
    * @param id the id of the existing item this instance will represent
    * @return an instance of this model with only ID populated
    */
-  public static UntitledModel justId(String id) {
-    return new UntitledModel(
+  public static User justId(String id) {
+    return new User(
       id,
+      null,
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      untitledfield);
+      FName,
+      LName,
+      UserType);
   }
   public interface BuildStep {
-    UntitledModel build();
+    User build();
     BuildStep id(String id);
-    BuildStep untitledfield(String untitledfield);
+    BuildStep fName(String fName);
+    BuildStep lName(String lName);
+    BuildStep userType(String userType);
   }
   
 
   public static class Builder implements BuildStep {
     private String id;
-    private String untitledfield;
+    private String FName;
+    private String LName;
+    private String UserType;
     @Override
-     public UntitledModel build() {
+     public User build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new UntitledModel(
+        return new User(
           id,
-          untitledfield);
+          FName,
+          LName,
+          UserType);
     }
     
     @Override
-     public BuildStep untitledfield(String untitledfield) {
-        this.untitledfield = untitledfield;
+     public BuildStep fName(String fName) {
+        this.FName = fName;
+        return this;
+    }
+    
+    @Override
+     public BuildStep lName(String lName) {
+        this.LName = lName;
+        return this;
+    }
+    
+    @Override
+     public BuildStep userType(String userType) {
+        this.UserType = userType;
         return this;
     }
     
@@ -154,14 +202,26 @@ public final class UntitledModel implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String untitledfield) {
+    private CopyOfBuilder(String id, String fName, String lName, String userType) {
       super.id(id);
-      super.untitledfield(untitledfield);
+      super.fName(fName)
+        .lName(lName)
+        .userType(userType);
     }
     
     @Override
-     public CopyOfBuilder untitledfield(String untitledfield) {
-      return (CopyOfBuilder) super.untitledfield(untitledfield);
+     public CopyOfBuilder fName(String fName) {
+      return (CopyOfBuilder) super.fName(fName);
+    }
+    
+    @Override
+     public CopyOfBuilder lName(String lName) {
+      return (CopyOfBuilder) super.lName(lName);
+    }
+    
+    @Override
+     public CopyOfBuilder userType(String userType) {
+      return (CopyOfBuilder) super.userType(userType);
     }
   }
   

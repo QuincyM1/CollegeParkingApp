@@ -9,9 +9,7 @@ import android.util.Log;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
-import com.amplifyframework.datastore.generated.model.UntitledModel;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 

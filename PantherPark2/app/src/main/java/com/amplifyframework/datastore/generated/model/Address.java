@@ -19,18 +19,22 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the TestModel2 type in your schema. */
+/** This is an auto generated class representing the Address type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "TestModel2s", type = Model.Type.USER, version = 1, authRules = {
+@ModelConfig(pluralName = "Addresses", type = Model.Type.USER, version = 1, authRules = {
   @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
 })
-public final class TestModel2 implements Model {
-  public static final QueryField ID = field("TestModel2", "id");
-  public static final QueryField NAME = field("TestModel2", "name");
-  public static final QueryField ACCOUNTNUM = field("TestModel2", "accountnum");
+public final class Address implements Model {
+  public static final QueryField ID = field("Address", "id");
+  public static final QueryField STREET = field("Address", "Street");
+  public static final QueryField CITY = field("Address", "City");
+  public static final QueryField STATE = field("Address", "State");
+  public static final QueryField ZIP = field("Address", "Zip");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String") String name;
-  private final @ModelField(targetType="Int") Integer accountnum;
+  private final @ModelField(targetType="String") String Street;
+  private final @ModelField(targetType="String") String City;
+  private final @ModelField(targetType="String") String State;
+  private final @ModelField(targetType="String") String Zip;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -41,12 +45,20 @@ public final class TestModel2 implements Model {
       return id;
   }
   
-  public String getName() {
-      return name;
+  public String getStreet() {
+      return Street;
   }
   
-  public Integer getAccountnum() {
-      return accountnum;
+  public String getCity() {
+      return City;
+  }
+  
+  public String getState() {
+      return State;
+  }
+  
+  public String getZip() {
+      return Zip;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -57,10 +69,12 @@ public final class TestModel2 implements Model {
       return updatedAt;
   }
   
-  private TestModel2(String id, String name, Integer accountnum) {
+  private Address(String id, String Street, String City, String State, String Zip) {
     this.id = id;
-    this.name = name;
-    this.accountnum = accountnum;
+    this.Street = Street;
+    this.City = City;
+    this.State = State;
+    this.Zip = Zip;
   }
   
   @Override
@@ -70,12 +84,14 @@ public final class TestModel2 implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      TestModel2 testModel2 = (TestModel2) obj;
-      return ObjectsCompat.equals(getId(), testModel2.getId()) &&
-              ObjectsCompat.equals(getName(), testModel2.getName()) &&
-              ObjectsCompat.equals(getAccountnum(), testModel2.getAccountnum()) &&
-              ObjectsCompat.equals(getCreatedAt(), testModel2.getCreatedAt()) &&
-              ObjectsCompat.equals(getUpdatedAt(), testModel2.getUpdatedAt());
+      Address address = (Address) obj;
+      return ObjectsCompat.equals(getId(), address.getId()) &&
+              ObjectsCompat.equals(getStreet(), address.getStreet()) &&
+              ObjectsCompat.equals(getCity(), address.getCity()) &&
+              ObjectsCompat.equals(getState(), address.getState()) &&
+              ObjectsCompat.equals(getZip(), address.getZip()) &&
+              ObjectsCompat.equals(getCreatedAt(), address.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), address.getUpdatedAt());
       }
   }
   
@@ -83,8 +99,10 @@ public final class TestModel2 implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getName())
-      .append(getAccountnum())
+      .append(getStreet())
+      .append(getCity())
+      .append(getState())
+      .append(getZip())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -94,10 +112,12 @@ public final class TestModel2 implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("TestModel2 {")
+      .append("Address {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()) + ", ")
-      .append("accountnum=" + String.valueOf(getAccountnum()) + ", ")
+      .append("Street=" + String.valueOf(getStreet()) + ", ")
+      .append("City=" + String.valueOf(getCity()) + ", ")
+      .append("State=" + String.valueOf(getState()) + ", ")
+      .append("Zip=" + String.valueOf(getZip()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -116,9 +136,11 @@ public final class TestModel2 implements Model {
    * @param id the id of the existing item this instance will represent
    * @return an instance of this model with only ID populated
    */
-  public static TestModel2 justId(String id) {
-    return new TestModel2(
+  public static Address justId(String id) {
+    return new Address(
       id,
+      null,
+      null,
       null,
       null
     );
@@ -126,40 +148,60 @@ public final class TestModel2 implements Model {
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name,
-      accountnum);
+      Street,
+      City,
+      State,
+      Zip);
   }
   public interface BuildStep {
-    TestModel2 build();
+    Address build();
     BuildStep id(String id);
-    BuildStep name(String name);
-    BuildStep accountnum(Integer accountnum);
+    BuildStep street(String street);
+    BuildStep city(String city);
+    BuildStep state(String state);
+    BuildStep zip(String zip);
   }
   
 
   public static class Builder implements BuildStep {
     private String id;
-    private String name;
-    private Integer accountnum;
+    private String Street;
+    private String City;
+    private String State;
+    private String Zip;
     @Override
-     public TestModel2 build() {
+     public Address build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new TestModel2(
+        return new Address(
           id,
-          name,
-          accountnum);
+          Street,
+          City,
+          State,
+          Zip);
     }
     
     @Override
-     public BuildStep name(String name) {
-        this.name = name;
+     public BuildStep street(String street) {
+        this.Street = street;
         return this;
     }
     
     @Override
-     public BuildStep accountnum(Integer accountnum) {
-        this.accountnum = accountnum;
+     public BuildStep city(String city) {
+        this.City = city;
+        return this;
+    }
+    
+    @Override
+     public BuildStep state(String state) {
+        this.State = state;
+        return this;
+    }
+    
+    @Override
+     public BuildStep zip(String zip) {
+        this.Zip = zip;
         return this;
     }
     
@@ -175,20 +217,32 @@ public final class TestModel2 implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, Integer accountnum) {
+    private CopyOfBuilder(String id, String street, String city, String state, String zip) {
       super.id(id);
-      super.name(name)
-        .accountnum(accountnum);
+      super.street(street)
+        .city(city)
+        .state(state)
+        .zip(zip);
     }
     
     @Override
-     public CopyOfBuilder name(String name) {
-      return (CopyOfBuilder) super.name(name);
+     public CopyOfBuilder street(String street) {
+      return (CopyOfBuilder) super.street(street);
     }
     
     @Override
-     public CopyOfBuilder accountnum(Integer accountnum) {
-      return (CopyOfBuilder) super.accountnum(accountnum);
+     public CopyOfBuilder city(String city) {
+      return (CopyOfBuilder) super.city(city);
+    }
+    
+    @Override
+     public CopyOfBuilder state(String state) {
+      return (CopyOfBuilder) super.state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder zip(String zip) {
+      return (CopyOfBuilder) super.zip(zip);
     }
   }
   
