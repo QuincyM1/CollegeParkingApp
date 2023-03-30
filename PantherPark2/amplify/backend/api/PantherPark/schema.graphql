@@ -1,0 +1,11 @@
+type TestModel2 @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  accountnum: Int
+}
+
+type UntitledModel @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  untitledfield: String
+}
+ 
