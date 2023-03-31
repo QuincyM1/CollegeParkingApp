@@ -10,6 +10,11 @@
       "StackName": "amplify-pantherpark-staging-14036",
       "StackId": "arn:aws:cloudformation:us-east-1:758930442298:stack/amplify-pantherpark-staging-14036/dea71ce0-ce9b-11ed-8424-123703a1da73",
       "AmplifyAppId": "de9bzyceued5s"
+    },
+    "categories": {
+      "auth": {
+        "PantherPark": {}
+      }
     }
   }
 }

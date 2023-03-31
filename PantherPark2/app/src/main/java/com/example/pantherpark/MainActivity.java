@@ -3,8 +3,10 @@ package com.example.pantherpark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.core.Amplify;
@@ -31,6 +33,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
         //mapFragment.getMapAsync( this);
     }
+
+
+    public void goToLogin(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
+
 
     //Method for Map Implementation - Zoyie
     @Override
