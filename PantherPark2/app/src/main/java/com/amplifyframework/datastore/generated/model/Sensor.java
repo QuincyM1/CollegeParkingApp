@@ -23,7 +23,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the Sensor type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "Sensors", type = Model.Type.USER, version = 1, authRules = {
-  @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+  @AuthRule(allow = AuthStrategy.GROUPS, groupClaim = "cognito:groups", groups = { "Admins" }, provider = "userPools", operations = { ModelOperation.READ, ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE })
 })
 public final class Sensor implements Model {
   public static final QueryField ID = field("Sensor", "id");

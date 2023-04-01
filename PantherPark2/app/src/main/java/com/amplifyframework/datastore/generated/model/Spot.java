@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasMany;
 import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the Spot type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "Spots", type = Model.Type.USER, version = 1, authRules = {
-  @AuthRule(allow = AuthStrategy.PUBLIC, operations = { ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE, ModelOperation.READ })
+  @AuthRule(allow = AuthStrategy.GROUPS, groupClaim = "cognito:groups", groups = { "Admins" }, provider = "userPools", operations = { ModelOperation.READ, ModelOperation.CREATE, ModelOperation.UPDATE, ModelOperation.DELETE })
 })
 @Index(name = "byDeck", fields = {"DeckID"})
 public final class Spot implements Model {
@@ -36,6 +37,7 @@ public final class Spot implements Model {
   private final @ModelField(targetType="Boolean", isRequired = true) Boolean HandicapOnly;
   private final @ModelField(targetType="Int") Integer ReservationStatus;
   private final @ModelField(targetType="ID", isRequired = true) String DeckID;
+  private final @ModelField(targetType="Reservation") @HasMany(associatedWith = "SpotID", type = Reservation.class) List<Reservation> ReservedSpot = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -60,6 +62,10 @@ public final class Spot implements Model {
   
   public String getDeckId() {
       return DeckID;
+  }
+  
+  public List<Reservation> getReservedSpot() {
+      return ReservedSpot;
   }
   
   public Temporal.DateTime getCreatedAt() {

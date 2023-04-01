@@ -1,4 +1,42 @@
-type Sensor @model @auth(rules: [{allow: public}]) {
+type Address {
+  Street: String!
+  City: String!
+  State: String!
+  ZipCode: String!
+}
+
+type DateAndTime {
+  DayNum: Int!
+  Month: Int!
+  Year: Int!
+  Hour: Int!
+  Minute: Int!
+  IsAM: Boolean!
+}
+
+type Reservation @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
+  id: ID!
+  StartDateAndTime: DateAndTime
+  EndDateAndTime: DateAndTime
+  SpotID: ID! @index(name: "bySpot")
+  Payment: Payment @hasOne
+}
+
+type Payment @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
+  id: ID!
+  CardID: ID! @index(name: "byCard")
+}
+
+type Card @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["User"], operations: [read]}, {allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
+  id: ID!
+  CardNumber: String!
+  CardVerificationValue: String!
+  ExpDate: String!
+  BillingName: String!
+  PaymentCard: [Payment] @hasMany(indexName: "byCard", fields: ["id"])
+}
+
+type Sensor @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
   id: ID!
   ModelNumber: Int
   SerialNumber: Int
@@ -6,30 +44,23 @@ type Sensor @model @auth(rules: [{allow: public}]) {
   Spot: Spot @hasOne
 }
 
-type Spot @model @auth(rules: [{allow: public}]) {
+type Spot @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
   id: ID!
   Code: String!
   HandicapOnly: Boolean!
   ReservationStatus: Int
   DeckID: ID! @index(name: "byDeck")
+  ReservedSpot: [Reservation] @hasMany(indexName: "bySpot", fields: ["id"])
 }
 
-type Address @model @auth(rules: [{allow: public}]) {
+type Deck @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [create, update, delete, read]}]) {
   id: ID!
-  Street: String
-  City: String
-  State: String
-  Zip: String
-}
-
-type Deck @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  DeckName: String
-  Levels: Int
+  DeckName: String!
+  Levels: Int!
   Latitude: String
   Longitude: String
-  SpotCount: Int
-  DeckAddress: Address @hasOne
+  SpotCount: Int!
   Spots: [Spot] @hasMany(indexName: "byDeck", fields: ["id"])
+  Address: Address!
 }
  
