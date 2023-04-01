@@ -14,15 +14,6 @@ type Spot @model @auth(rules: [{allow: public}]) {
   DeckID: ID! @index(name: "byDeck")
 }
 
-type Card @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  CardNumber: String!
-  CardVerificationValue: Int!
-  ExpDate: String!
-  BillingName: String!
-  userID: ID! @index(name: "byUser")
-}
-
 type Address @model @auth(rules: [{allow: public}]) {
   id: ID!
   Street: String
@@ -40,13 +31,5 @@ type Deck @model @auth(rules: [{allow: public}]) {
   SpotCount: Int
   DeckAddress: Address @hasOne
   Spots: [Spot] @hasMany(indexName: "byDeck", fields: ["id"])
-}
-
-type User @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  FName: String
-  LName: String
-  UserType: String
-  UserCards: [Card] @hasMany(indexName: "byUser", fields: ["id"])
 }
  
