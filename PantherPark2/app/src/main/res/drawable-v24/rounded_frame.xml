@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--This shape can be used to set rounded corners for an layout element-->
+    <!--Recommended to be used with FrameLayout-->
+    <!--To use set Layout property to android:background="@drawable/rounded_frame"-->
+
+    <solid android:color="@color/frame_bg"/>
+
+    <padding android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp"/>
+
+    <corners android:radius="26dp" />
+
+</shape>

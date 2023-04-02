@@ -12,5 +12,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="theme_gray">#5b6772</color>
 
+    <!--Background-->
+    <color name="page_bg">#C1E5FF</color>
+    <color name="frame_bg">#EEF9FF</color>
+
+    <!--Text-->
+    <color name="textColor">#000000</color>
+    <color name="textColorSecondary">#4C4C4C</color>
 
 </resources>
