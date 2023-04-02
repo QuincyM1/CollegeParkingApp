@@ -1,7 +1,6 @@
-package com.example.pantherpark;
+package com.example.pantherpark.data_objects;
 
 import java.util.*;
-import java.io.*;
 import java.lang.*;
 
 public class ParkingLot {

@@ -12,6 +12,7 @@ import com.amplifyframework.auth.cognito.result.GlobalSignOutError;
 import com.amplifyframework.auth.cognito.result.HostedUIError;
 import com.amplifyframework.auth.cognito.result.RevokeTokenError;
 import com.amplifyframework.core.Amplify;
+import com.example.pantherpark.R;
 
 public class HomePage extends AppCompatActivity {
 
