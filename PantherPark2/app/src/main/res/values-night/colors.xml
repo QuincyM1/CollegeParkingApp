@@ -13,8 +13,8 @@
     <color name="theme_gray">#5b6772</color>
 
     <!--Background-->
-    <color name="page_bg">#2D4151</color>
-    <color name="frame_bg">#20262B</color>
+    <color name="page_bg">#314261</color>
+    <color name="frame_bg">#293135</color>
 
     <!--Text-->
     <color name="textColor">#FFFFFF</color>

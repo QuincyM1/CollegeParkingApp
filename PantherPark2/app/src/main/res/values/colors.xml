@@ -13,11 +13,15 @@
     <color name="theme_gray">#5b6772</color>
 
     <!--Background-->
-    <color name="page_bg">#C1E5FF</color>
+    <color name="page_bg">#ABC8FF</color>
     <color name="frame_bg">#EEF9FF</color>
 
     <!--Text-->
     <color name="textColor">#000000</color>
     <color name="textColorSecondary">#4C4C4C</color>
+
+    <!--MISC Colors-->
+    <color name="link_color">#2779F6</color>
+    <color name="error_red">#CC0000</color>
 
 </resources>

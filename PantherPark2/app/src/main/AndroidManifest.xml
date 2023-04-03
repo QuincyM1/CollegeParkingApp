@@ -12,10 +12,10 @@
         android:theme="@style/Theme.PantherPark"
         tools:targetApi="31" >
         <activity
-            android:name=".RegisterScreen"
+            android:name=".SignUpScreen"
             android:exported="false" />
         <activity
-            android:name=".LoginScreen"
+            android:name=".SignInScreen"
             android:exported="false" />
         <activity
             android:name=".HomePage"
