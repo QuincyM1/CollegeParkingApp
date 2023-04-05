@@ -6,7 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.*;
+import android.os.Handler;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
@@ -21,6 +22,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 3000);
 
         try {
             Amplify.addPlugin(new AWSApiPlugin()); // UNCOMMENT this line once backend is deployed
@@ -32,9 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e("Amplify", "Could not initialize Amplify", error);
         }
 
-        // Map Implemetation - Zoyie
-        //SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
-        //mapFragment.getMapAsync( this);
+
     }
 
 

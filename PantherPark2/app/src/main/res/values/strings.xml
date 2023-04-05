@@ -10,4 +10,65 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="sign_up"><u>Don’t have an account? Sign up!</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Spinner for HomePage Destination Dropdown -->
+    <string-array name="destinations">
+        <item>Sparks Hall</item>
+        <item>Center West</item>
+        <item>Library North</item>
+        <item>Classroom South</item>
+        <item>Art and Humanities</item>
+        <item>Langdale Hall</item>
+        <item>Sports Arena</item>
+        <item>Sports Arena Annex</item>
+        <item>Urban Life</item>
+        <item>Courtland Building</item>
+        <item>Courtland North Building</item>
+        <item>148 Edgewood Avenue</item>
+        <item>College of Education</item>
+        <item>Library South</item>
+        <item>Dahlberg Hall</item>
+        <item>One Park Place</item>
+        <item>Natural Science Center</item>
+        <item>University Bookstore Building</item>
+        <item>J. Mack Robinson College of Business</item>
+        <item>Science Annex</item>
+        <item>Rialto Theatre</item>
+        <item>Haas-Howell</item>
+        <item>Standard Building</item>
+        <item>Bennett A. Brown Commerce Building</item>
+        <item>A. Young School of Policy Studies</item>
+        <item>Student Center East</item>
+        <item>Student Recreation Center</item>
+        <item>H.M. Aderhold Learning Center</item>
+        <item>University Lofts</item>
+        <item>Petit Science Center</item>
+        <item>University Lofts Parking</item>
+        <item>Capitol Hill Child Enrichment Center</item>
+        <item>University Commons</item>
+        <item>25 Park Place (Suntrust Tower)</item>
+        <item>58 Edgewood Avenue</item>
+        <item>75 Piedmont Ave (Citizens Trust)</item>
+        <item>Patton Hall</item>
+        <item>Special Interest Housing</item>
+        <item>Athletic Training Facility</item>
+        <item>Edgewood Sculpture Studio</item>
+        <item>175 Piedmont North A</item>
+        <item>175 Piedmont North B</item>
+        <item>College of Law</item>
+        <item>Centennial Hall</item>
+        <item>Alumni Center</item>
+        <item>40 Pryor Avenue</item>
+        <item>Research Science Center</item>
+        <item>25 Auburn Avenue</item>
+        <item>55 Park Place Building</item>
+        <item>124 Edgewood Avenue</item>
+        <item>Piedmont Central Residence Hall</item>
+        <item>GSU Parc Stadium</item>
+        <item>GSU Stadium Cauldron</item>
+        <item>GSU Convocation Center</item>
+        <item>Creative Media Industries Institute (CMII)</item>
+        <item>100 Edgewood</item>
+    </string-array>
 </resources>
