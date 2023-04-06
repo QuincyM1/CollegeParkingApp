@@ -1,13 +1,11 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/signInScreenConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_bg"
-    tools:context=".SignInScreen">
+    tools:context=".ConfirmationScreen">
 
 
     <LinearLayout
@@ -18,54 +16,63 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
-            android:id="@+id/signInHeader"
-            android:layout_width="304dp"
+            android:id="@+id/confirmHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Sign In"
+            android:text="Confirm Code"
             android:textColor="@color/main_blue"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
+            android:id="@+id/view8"
             android:layout_width="match_parent"
             android:layout_height="20dp" />
-
-        <EditText
-            android:id="@+id/emailField"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="10dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <EditText
-            android:id="@+id/passwordField"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:background="@drawable/edit_text_border"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp" />
 
         <TextView
-            android:id="@+id/errorLabel"
+            android:id="@+id/infoConfirmLabel"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="You will have received a verification code in your sign up email. Enter the code below to verify your account:"
+            android:textColor="@color/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <EditText
+            android:id="@+id/codeField"
+            android:layout_width="225dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/edit_text_border"
+            android:ems="10"
+            android:hint="Enter code here"
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/errorCodeLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -73,44 +80,30 @@
             android:gravity="center"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:textColor="@color/error_red"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@color/error_red" />
+
+        <View
+            android:id="@+id/view7"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/signInButton"
+            android:id="@+id/verifyButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:onClick="signIn"
-            android:text="Sign In"
+            android:onClick="confirmCode"
+            android:text="Verify"
             app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <View
+            android:id="@+id/view9"
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:id="@+id/registerLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="goToSignUp"
-            android:text="@string/sign_up"
-            android:textColor="@color/link_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
-
+            android:layout_height="20dp" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

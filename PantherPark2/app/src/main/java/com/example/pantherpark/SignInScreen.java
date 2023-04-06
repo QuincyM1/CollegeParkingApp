@@ -52,7 +52,7 @@ public class SignInScreen extends AppCompatActivity {
                 new Consumer<AuthSignInResult>() {
                     @Override
                     public void accept(@NonNull AuthSignInResult result) {
-                        Log.i("AuthQuickstart", result.isSignedIn() ? "Sign in succeeded" : "Sign in not complete");
+                        Log.i("AWS_AUTH_SUCCESS", result.isSignedIn() ? "Sign in succeeded" : "Sign in not complete");
 
                         //Clear error label of any errors, if applicable
                         clearErrors();
@@ -70,8 +70,8 @@ public class SignInScreen extends AppCompatActivity {
                         String errorCause = error.getCause().toString();
                         String errorException = error.toString();
 
-                        Log.e("Error Cause", errorCause);
-                        Log.e("AuthQuickstart", errorException);
+                        Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
+                        Log.e("AWS_AUTH_FAIL", errorException);
 
                         //NotAuthorizedException
                         if(errorCause.contains("NotAuthorizedException")) {
@@ -83,7 +83,11 @@ public class SignInScreen extends AppCompatActivity {
                             //Alert user that username of that email not found, register if needed.
                             UNFE();
                         }
-
+                        //InvalidParameterException
+                        else if(errorCause.contains("InvalidParameterException")) {
+                            //Alert user that username is missing
+                            IPE();
+                        }
                     }
                 }
         );
@@ -130,6 +134,18 @@ public class SignInScreen extends AppCompatActivity {
             public void run() {
                 errorLabel.setText("Unknown Email - Please enter a registered email" +
                         "\nor sign up.");
+            }
+        });
+    }
+
+    /**
+     * InvalidParameterException
+     */
+    private void IPE() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                errorLabel.setText("Please enter an email username.");
             }
         });
     }

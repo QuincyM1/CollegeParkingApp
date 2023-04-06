@@ -26,14 +26,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getSupportActionBar().hide();
         }
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, 3000);
-
+        //Initialize backend
         try {
             Amplify.addPlugin(new AWSApiPlugin()); // UNCOMMENT this line once backend is deployed
             Amplify.addPlugin(new AWSDataStorePlugin());
@@ -44,15 +37,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.e("Amplify", "Could not initialize Amplify", error);
         }
 
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, SignInScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 3000);
 
     }
 
 
+    /*
     public void goToLogin(View view) {
         //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         Intent intent = new Intent(getApplicationContext(), SignInScreen.class);
         startActivity(intent);
     }
+
+     */
 
 
     //Method for Map Implementation - Zoyie
