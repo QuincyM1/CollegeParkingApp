@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,6 +46,10 @@ public class SignUpScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_screen);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         nameField = findViewById(R.id.nameFieldSignUp);
         emailField = findViewById(R.id.emailFieldSignUp);
@@ -90,8 +96,14 @@ public class SignUpScreen extends AppCompatActivity {
 
                             Log.i("AWS_AUTH_SUCCESS", "Result: " + result.toString());
 
+                            //Hide the damn keyboard
+                            hideKeyboard();
+
                             //Clear any errors
                             clearErrors();
+
+                            //Remove Sign In screen from activity stack
+                            SignInScreen.signinactivity.finish();
 
                             Intent intent = new Intent(getApplicationContext(), ConfirmationScreen.class);
                             intent.putExtra("EMAIL", email);
@@ -271,6 +283,18 @@ public class SignUpScreen extends AppCompatActivity {
         }
 
 
+    }
+
+    private void hideKeyboard() {
+        Activity activity = this;
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

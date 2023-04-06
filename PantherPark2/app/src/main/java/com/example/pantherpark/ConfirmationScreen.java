@@ -2,11 +2,14 @@ package com.example.pantherpark;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +30,10 @@ public class ConfirmationScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation_screen);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         codeField = findViewById(R.id.codeField);
         errorLabel = findViewById(R.id.errorCodeLabel);
@@ -54,13 +61,15 @@ public class ConfirmationScreen extends AppCompatActivity {
                         public void accept(@NonNull AuthSignUpResult result) {
                             Log.i("AWS_AUTH_SUCCESS", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete");
 
+                            //Hide the damn keyboard
+                            hideKeyboard();
+
                             //Clear any errors
                             clearErrors();
 
-                            //TODO - start a thank you dialog, which then leads to home page
-                            Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                            startActivity(intent);
-                            finish();
+                            FragmentManager fm = getSupportFragmentManager();
+                            ConfirmationDialog cd = new ConfirmationDialog(view);
+                            cd.show(fm, "Thank you!");
 
                         }
                     },
@@ -75,7 +84,7 @@ public class ConfirmationScreen extends AppCompatActivity {
 
                             //CodeMismatchException
                             if(errorCause.contains("CodeMismatchException")){
-
+                                CME();
                             }
 
                         }
@@ -117,7 +126,17 @@ public class ConfirmationScreen extends AppCompatActivity {
     }
 
 
-
+    private void hideKeyboard() {
+        Activity activity = this;
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
 
 }

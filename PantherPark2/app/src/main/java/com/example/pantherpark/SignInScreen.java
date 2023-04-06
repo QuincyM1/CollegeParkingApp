@@ -3,10 +3,12 @@ package com.example.pantherpark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -28,10 +30,18 @@ public class SignInScreen extends AppCompatActivity {
     // Labels
     private TextView errorLabel;
 
+    public static SignInScreen signinactivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin_screen);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        signinactivity = this;
 
         emailField = findViewById(R.id.emailField);
         passwordField = findViewById(R.id.passwordField);
@@ -53,6 +63,9 @@ public class SignInScreen extends AppCompatActivity {
                     @Override
                     public void accept(@NonNull AuthSignInResult result) {
                         Log.i("AWS_AUTH_SUCCESS", result.isSignedIn() ? "Sign in succeeded" : "Sign in not complete");
+
+                        //Hide the damn keyboard
+                        hideKeyboard();
 
                         //Clear error label of any errors, if applicable
                         clearErrors();
@@ -148,6 +161,18 @@ public class SignInScreen extends AppCompatActivity {
                 errorLabel.setText("Please enter an email username.");
             }
         });
+    }
+
+    private void hideKeyboard() {
+        Activity activity = this;
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
