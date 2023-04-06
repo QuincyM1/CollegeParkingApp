@@ -5,6 +5,6 @@
 
     <solid android:color="@color/page_bg" />
 
-    <corners android:radius="26dp" />
+    <corners android:radius="20dp" />
 
 </shape>
