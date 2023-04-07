@@ -14,10 +14,10 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        app:layout_constraintBottom_toTopOf="parent"
+        android:contentDescription="Destinations"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="Destinations" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView2"
