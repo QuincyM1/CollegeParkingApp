@@ -10,8 +10,22 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="sign_up"><u>Don’t have an account? Sign up!</u></string>
+    <string name="enter_parking_lot_id">Enter Parking Lot ID</string>
+    <string name="delete_parking_lot">Delete Parking Lot</string>
+    <string name="parking_lot_name">Parking Lot Name</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="lot_status">Lot Status (Open/Closed)</string>
+    <string name="add_parking_lot">Add Parking Lot</string>
+    <string name="delete_parking_lot_button_description">Delete Parking Lot Button</string>
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="strings">Enter Parking Lot ID</string>
     <!-- Spinner for HomePage Destination Dropdown -->
     <string-array name="destinations">
         <item>Sparks Hall</item>
