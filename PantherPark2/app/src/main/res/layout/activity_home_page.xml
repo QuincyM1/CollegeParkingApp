@@ -13,11 +13,13 @@
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="42dp"
         android:contentDescription="Destinations"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView2"
@@ -35,6 +37,7 @@
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="42dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +49,8 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="Map" />
+            android:contentDescription="Map"
+            app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView2" />
     </FrameLayout>
 
 
