@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/parking_lot_name"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/etAddress"
@@ -24,32 +26,42 @@
             android:layout_height="wrap_content"
             android:hint="@string/address"
             android:autofillHints="postalAddress"
-            android:inputType="textPostalAddress" />
+            android:inputType="textPostalAddress"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/etCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/city" />
+            android:hint="@string/city"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/etState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/state" />
+            android:hint="@string/state"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/etZip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/zip_code"
-            android:inputType="number" />
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
 
         <EditText
             android:id="@+id/etLotStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/lot_status" />
+            android:hint="@string/lot_status"
+            android:minHeight="48dp"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/btnAddParkingLot"

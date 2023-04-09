@@ -1,18 +1,14 @@
 package com.example.pantherpark;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.pantherpark.data_objects.AdminUser;
 
 public class AddParkingLot extends AppCompatActivity {
 
     private EditText etName, etAddress, etCity, etState, etZip, etLotStatus;
-    private Button btnAddParkingLot;
     // Create an instance of the AdminUser class
     private AdminUser adminUser = new AdminUser();
 
@@ -28,23 +24,20 @@ public class AddParkingLot extends AppCompatActivity {
         etZip = findViewById(R.id.etZip);
         etLotStatus = findViewById(R.id.etLotStatus);
 
-        btnAddParkingLot = findViewById(R.id.btnAddParkingLot);
+        Button btnAddParkingLot = findViewById(R.id.btnAddParkingLot);
 
-        btnAddParkingLot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = etName.getText().toString();
-                String address = etAddress.getText().toString();
-                String city = etCity.getText().toString();
-                String state = etState.getText().toString();
-                int zip = Integer.parseInt(etZip.getText().toString());
-                String lotStatus = etLotStatus.getText().toString();
-                boolean lotAvailable = lotStatus.equalsIgnoreCase("Open");
+        btnAddParkingLot.setOnClickListener(v -> {
+            String name = etName.getText().toString();
+            String address = etAddress.getText().toString();
+            String city = etCity.getText().toString();
+            String state = etState.getText().toString();
+            int zip = Integer.parseInt(etZip.getText().toString());
+            String lotStatus = etLotStatus.getText().toString();
+            boolean lotAvailable = lotStatus.equalsIgnoreCase("Open");
 
-                // Assuming you have an instance of AdminUser named adminUser
+            // Assuming you have an instance of AdminUser named adminUser
 
-                adminUser.addParkingLot(name, address, city, state, zip, lotStatus, lotAvailable);
-            }
+            adminUser.addParkingLot(name, address, city, state, zip, lotStatus, lotAvailable);
         });
     }
 }

@@ -2,6 +2,9 @@ package com.example.pantherpark.data_objects;
 
 import java.util.*;
 import java.lang.*;
+import com.amplifyframework.datastore.generated.model.Spot;
+
+
 
 public class AdminUser extends User {
     private int adminUserID;
@@ -41,6 +44,30 @@ public class AdminUser extends User {
         getParkingLots().add(parkingLot);
         parkingLots.add(parkingLot);
     }
+    public void addParkingSpot(String code, Boolean handicapOnly, Integer reservationStatus, String deckId) {
+        // Find the parking lot with the given deckId
+        ParkingLot targetParkingLot = null;
+        for (ParkingLot parkingLot : parkingLots) {
+            if (parkingLot.getParkingLotID() == Integer.parseInt(deckId)) {
+                targetParkingLot = parkingLot;
+                break;
+            }
+        }
+
+        // If the parking lot is found, add the parking spot to that parking lot
+        if (targetParkingLot != null) {
+            Spot spot = Spot.builder()
+                    .code(code)
+                    .handicapOnly(handicapOnly)
+                    .deckId(deckId)
+                    .reservationStatus(reservationStatus)
+                    .build();
+            targetParkingLot.addParkingSpot(spot);
+        } else {
+            // Handle the case when the parking lot is not found, e.g., show an error message or throw an exception
+        }
+    }
+
 
     public void deleteParkingLot(int parkingLotID) {
         Iterator<ParkingLot> iterator = getParkingLots().iterator();

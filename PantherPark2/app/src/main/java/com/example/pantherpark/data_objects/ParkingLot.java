@@ -1,5 +1,7 @@
 package com.example.pantherpark.data_objects;
 
+import com.amplifyframework.datastore.generated.model.Spot;
+
 import java.util.*;
 import java.lang.*;
 
@@ -183,4 +185,6 @@ public class ParkingLot {
     }
 
 
+    public void addParkingSpot(Spot spot) {
+    }
 }
