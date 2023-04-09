@@ -121,14 +121,15 @@ public class ParkingLot {
             System.out.println("Parking spot does not exist in this parking lot.");
             return;
         }
-        else{
+        else {
             for (int i = 0; i < parkings.size(); i++) {
-                if(parkings.get(i).getParkingID() == parking.getParkingID()) {
+                if (parkings.get(i).getParkingID() == parking.getParkingID()) {
                     parkings.get(i).closeParking();
                 }
             }
 
             parking.closeParking();
+        }
     }
     public void openParking(Parking parking) {
         if(parkings.contains(parking) == false) {
