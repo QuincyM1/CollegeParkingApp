@@ -15,6 +15,7 @@ import com.google.android.gms.maps.*;
 
 
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -86,10 +87,12 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // if user selects [Select A Destination]
                 if (adapterView.getItemAtPosition(i).equals("Select a Destination")) {
+                    clearMarker(mMap);
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
                     resetPosition(mMap);
                 }
                 if (adapterView.getItemAtPosition(i).equals("Classroom South")) {
+                    clearMarker(mMap);
                     selection = new LatLng(33.7527011, -84.3874148);
                     makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
 
@@ -119,12 +122,40 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
 
 
     public void makePosition(@NonNull GoogleMap googleMap, LatLng LL, String s) {
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(LL).zoom(18).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
         googleMap.addMarker(new MarkerOptions().position(selection).title(s));
     }
     public void resetPosition(@NonNull GoogleMap googleMap){
         LatLng InitialPosition = new LatLng(33.7488, -84.3877);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(14).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+    }
+
+    public void clearMarker(@NonNull GoogleMap googleMap) {
+        googleMap.clear();
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
