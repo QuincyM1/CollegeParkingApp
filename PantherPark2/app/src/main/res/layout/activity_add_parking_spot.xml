@@ -16,27 +16,27 @@
         <EditText
             android:id="@+id/spot_code_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="Enter spot code"
             android:inputType="text" />
 
         <CheckBox
             android:id="@+id/handicap_only_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="Handicap only" />
 
         <EditText
             android:id="@+id/reservation_status_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="Enter reservation status"
             android:inputType="number" />
 
         <EditText
             android:id="@+id/deck_id_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:hint="Enter deck ID"
             android:inputType="text" />
 

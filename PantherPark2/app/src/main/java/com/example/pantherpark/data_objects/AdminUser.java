@@ -44,11 +44,11 @@ public class AdminUser extends User {
         getParkingLots().add(parkingLot);
         parkingLots.add(parkingLot);
     }
-    public void addParkingSpot(String code, Boolean handicapOnly, Integer reservationStatus, String deckId) {
+    public void addParkingSpot(int code, String handicapOnly, String reservationStatus, boolean deckId) {
         // Find the parking lot with the given deckId
         ParkingLot targetParkingLot = null;
         for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.getParkingLotID() == Integer.parseInt(deckId)) {
+            if (parkingLot.getParkingLotID() == Integer.parseInt(String.valueOf(deckId))) {
                 targetParkingLot = parkingLot;
                 break;
             }
@@ -57,14 +57,33 @@ public class AdminUser extends User {
         // If the parking lot is found, add the parking spot to that parking lot
         if (targetParkingLot != null) {
             Spot spot = Spot.builder()
-                    .code(code)
-                    .handicapOnly(handicapOnly)
-                    .deckId(deckId)
-                    .reservationStatus(reservationStatus)
+                    .code(String.valueOf(code))
+                    .handicapOnly(Boolean.valueOf(handicapOnly))
+                    .deckId(String.valueOf(deckId))
+                    .reservationStatus(Integer.valueOf(reservationStatus))
                     .build();
             targetParkingLot.addParkingSpot(spot);
         } else {
-            // Handle the case when the parking lot is not found, e.g., show an error message or throw an exception
+            // Handle the case when the parking lot is not found
+            System.out.println("Error: Parking lot with ID " + deckId + " not found. Cannot add parking spot.");
+        }
+    }
+    public void deleteParkingSpot(String parkingLotId, int spotNumber) {
+        // Find the parking lot with the given parkingLotId
+        ParkingLot targetParkingLot = null;
+        for (ParkingLot parkingLot : parkingLots) {
+            if (parkingLot.getParkingLotID() == Integer.parseInt(parkingLotId)) {
+                targetParkingLot = parkingLot;
+                break;
+            }
+        }
+
+        // If the parking lot is found, delete the parking spot
+        if (targetParkingLot != null) {
+            targetParkingLot.deleteParkingSpot(spotNumber);
+        } else {
+            // Handle the case when the parking lot is not found
+            System.out.println("Error: Parking lot with ID " + parkingLotId + " not found. Cannot delete parking spot.");
         }
     }
 

@@ -8,6 +8,8 @@ import java.lang.*;
 public class ParkingLot {
     private int parkingLotID;
     private ArrayList<Parking> parkings = new ArrayList<Parking>();
+
+    private ArrayList<Spot> spots = new ArrayList<>(); // Add the ArrayList of Spot objects
     private String name;
     private String address;
     private String city;
@@ -16,8 +18,10 @@ public class ParkingLot {
     private String lotStatus;
     private boolean lotAvailable;
 
+
+
     public ParkingLot() {
-        this.parkingLotID = (int)(Math.random()*1000000);
+        this.parkingLotID = (int) (Math.random() * 1000000);
         this.name = "";
         this.address = "";
         this.city = "";
@@ -29,7 +33,7 @@ public class ParkingLot {
 
     public ParkingLot(String name, String address, String city, String state, int zip,
                       String lotStatus, boolean lotAvailable) {
-        this.parkingLotID = (int)(Math.random()*1000000);
+        this.parkingLotID = (int) (Math.random() * 1000000);
         this.name = name;
         this.address = address;
         this.city = city;
@@ -42,6 +46,7 @@ public class ParkingLot {
     public int getParkingLotID() {
         return parkingLotID;
     }
+
     public void setParkingLotID(int parkingLotID) {
         this.parkingLotID = parkingLotID;
     }
@@ -49,6 +54,7 @@ public class ParkingLot {
     public ArrayList<Parking> getParkings() {
         return parkings;
     }
+
     public void setParkings(ArrayList<Parking> parkings) {
         this.parkings = parkings;
     }
@@ -56,6 +62,7 @@ public class ParkingLot {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -63,6 +70,7 @@ public class ParkingLot {
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -70,6 +78,7 @@ public class ParkingLot {
     public String getCity() {
         return city;
     }
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -77,6 +86,7 @@ public class ParkingLot {
     public String getState() {
         return state;
     }
+
     public void setState(String state) {
         this.state = state;
     }
@@ -84,6 +94,7 @@ public class ParkingLot {
     public int getZip() {
         return zip;
     }
+
     public void setZip(int zip) {
         this.zip = zip;
     }
@@ -91,6 +102,7 @@ public class ParkingLot {
     public String getLotStatus() {
         return lotStatus;
     }
+
     public void setLotStatus(String lotStatus) {
         this.lotStatus = lotStatus;
     }
@@ -98,6 +110,7 @@ public class ParkingLot {
     public boolean getLotAvailable() {
         return lotAvailable;
     }
+
     public void setLotAvailable(boolean lotAvailable) {
         this.lotAvailable = lotAvailable;
     }
@@ -105,6 +118,7 @@ public class ParkingLot {
     public void addParking(Parking parking) {
         parkings.add(parking);
     }
+
     public void removeParking(Parking parking) {
         parkings.remove(parking);
     }
@@ -113,17 +127,17 @@ public class ParkingLot {
         lotStatus = "Closed";
         lotAvailable = false;
     }
+
     public void openLot() {
         lotStatus = "Open";
         lotAvailable = true;
     }
 
     public void closeParking(Parking parking) {
-        if(parkings.contains(parking) == false) {
+        if (parkings.contains(parking) == false) {
             System.out.println("Parking spot does not exist in this parking lot.");
             return;
-        }
-        else {
+        } else {
             for (int i = 0; i < parkings.size(); i++) {
                 if (parkings.get(i).getParkingID() == parking.getParkingID()) {
                     parkings.get(i).closeParking();
@@ -133,14 +147,14 @@ public class ParkingLot {
             parking.closeParking();
         }
     }
+
     public void openParking(Parking parking) {
-        if(parkings.contains(parking) == false) {
+        if (parkings.contains(parking) == false) {
             System.out.println("Parking spot does not exist in this parking lot.");
             return;
-        }
-        else{
+        } else {
             for (int i = 0; i < parkings.size(); i++) {
-                if(parkings.get(i).getParkingID() == parking.getParkingID()) {
+                if (parkings.get(i).getParkingID() == parking.getParkingID()) {
                     parkings.get(i).openParking();
                 }
             }
@@ -150,13 +164,12 @@ public class ParkingLot {
     }
 
     public void maintainParking(Parking parking) {
-        if(parkings.contains(parking) == false) {
+        if (parkings.contains(parking) == false) {
             System.out.println("Parking spot does not exist in this parking lot.");
             return;
-        }
-        else{
+        } else {
             for (int i = 0; i < parkings.size(); i++) {
-                if(parkings.get(i).getParkingID() == parking.getParkingID()) {
+                if (parkings.get(i).getParkingID() == parking.getParkingID()) {
                     parkings.get(i).parkingMaintenance();
                 }
             }
@@ -176,15 +189,54 @@ public class ParkingLot {
         System.out.println("Parking Lot Status: " + lotStatus);
         System.out.println("Parking Lot Available: " + lotAvailable);
         System.out.println("Parking Lot Parkings: " + parkings);
+        System.out.println("Parking Lot Spots: " + spots);
+    }
+
+    // Add the getter and setter for the list of spots
+    public ArrayList<Spot> getSpots() {
+        return spots;
+    }
+
+    public void setSpots(ArrayList<Spot> spots) {
+        this.spots = spots;
+    }
+
+    // Add methods to add and remove spots
+    public void addSpot(Spot spot) {
+        this.spots.add(spot);
+    }
+
+    public void removeSpot(int spotNumber) {
+        Iterator<Spot> iterator = spots.iterator();
+
+        while (iterator.hasNext()) {
+            Spot spot = iterator.next();
+            if (Integer.parseInt(spot.getCode()) == spotNumber) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 
     public String toString() {
         return "ParkingLot [parkingLotID=" + parkingLotID + ", parkings=" + parkings + ", name=" + name + ", address="
                 + address + ", city=" + city + ", state=" + state + ", zip=" + zip + ", lotStatus=" + lotStatus
-                + ", lotAvailable=" + lotAvailable + "]";
+                + ", lotAvailable=" + lotAvailable + ", spots=" + spots + "]"; // Add spots to the toString method
     }
 
 
     public void addParkingSpot(Spot spot) {
+    }
+
+    public void deleteParkingSpot(int spotNumber) {
+        Iterator<Spot> iterator = getSpots().iterator();
+
+        while (iterator.hasNext()) {
+            Spot spot = iterator.next();
+            if (Integer.parseInt(spot.getCode()) == spotNumber) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DeleteParkingSpot">
+
+    <EditText
+        android:id="@+id/parking_lot_id_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Parking Lot ID"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/spot_number_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Spot Number"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/parking_lot_id_input"
+        app:layout_constraintStart_toStartOf="@+id/parking_lot_id_input"
+        app:layout_constraintTop_toBottomOf="@+id/parking_lot_id_input" />
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Delete Parking Spot"
+        app:layout_constraintEnd_toEndOf="@+id/spot_number_input"
+        app:layout_constraintStart_toStartOf="@+id/spot_number_input"
+        app:layout_constraintTop_toBottomOf="@+id/spot_number_input" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
