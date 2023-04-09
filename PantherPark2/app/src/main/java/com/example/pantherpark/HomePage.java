@@ -3,35 +3,22 @@ package com.example.pantherpark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.pantherpark.databinding.ActivityMainBinding;
 import com.google.android.gms.maps.*;
 
 
-import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
-import com.amplifyframework.auth.cognito.result.GlobalSignOutError;
-import com.amplifyframework.auth.cognito.result.HostedUIError;
-import com.amplifyframework.auth.cognito.result.RevokeTokenError;
-import com.amplifyframework.core.Amplify;
-import com.example.pantherpark.R;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
-import java.lang.reflect.Array;
 
 public class HomePage extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
@@ -39,22 +26,28 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
         add responses to bottom nav options (Account, Park, Reservation),
 
      */
-    MapView mapView;
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     BottomNavigationView bottomNavigationView;
     boolean isPermissionGranted;
 
+    LatLng selection = new LatLng(0,0);
 
+    GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         //check permissions for map
         //set up map
-        mapView.onCreate(savedInstanceState);
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+        mapFragment.getMapAsync(this);
         //set up bottom navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView2);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -64,17 +57,18 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
                     case R.id.park:
                         spinner.setVisibility(View.VISIBLE);
                         Park park = new Park();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout3, park).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
                         return true;
                     case R.id.reservation:
                         spinner.setVisibility(View.GONE);
+
                         Reservation reservation = new Reservation();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout3, reservation).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, reservation).commit();
                         return true;
                     case R.id.account:
                         spinner.setVisibility(View.GONE);
                         Account account = new Account();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout3, account).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, account).commit();
                         return true;
                 }
                 return false;
@@ -82,7 +76,6 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
         });
 
         //mapview inside of frame located in activity_home_page xml
-        mapView=findViewById(R.id.map);
         //Spinner showing list of destinations
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.destinations, android.R.layout.simple_spinner_item);
@@ -94,6 +87,12 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
                 // if user selects [Select A Destination]
                 if (adapterView.getItemAtPosition(i).equals("Select a Destination")) {
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
+                    resetPosition(mMap);
+                }
+                if (adapterView.getItemAtPosition(i).equals("Classroom South")) {
+                    selection = new LatLng(33.7527011, -84.3874148);
+                    makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
+
                 }
                 //Gets destination from user selection and creates a string
                 String destinationToText = spinner.getSelectedItem().toString();
@@ -113,46 +112,21 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-
+        LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+        mMap = googleMap;
     }
 
-    public void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
 
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
+    public void makePosition(@NonNull GoogleMap googleMap, LatLng LL, String s) {
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
+        googleMap.addMarker(new MarkerOptions().position(selection).title(s));
     }
-
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    public void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        mapView.onSaveInstanceState(outState);
+    public void resetPosition(@NonNull GoogleMap googleMap){
+        LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
     }
     @Override
-
-
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
     }

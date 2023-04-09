@@ -62,5 +62,6 @@ type Deck @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [
   SpotCount: Int!
   Spots: [Spot] @hasMany(indexName: "byDeck", fields: ["id"])
   Address: Address!
+  WhoIsAllowed: String!
 }
  

@@ -33,6 +33,7 @@ public final class Deck implements Model {
   public static final QueryField LONGITUDE = field("Deck", "Longitude");
   public static final QueryField SPOT_COUNT = field("Deck", "SpotCount");
   public static final QueryField ADDRESS = field("Deck", "Address");
+  public static final QueryField WHO_IS_ALLOWED = field("Deck", "WhoIsAllowed");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String DeckName;
   private final @ModelField(targetType="Int", isRequired = true) Integer Levels;
@@ -41,6 +42,7 @@ public final class Deck implements Model {
   private final @ModelField(targetType="Int", isRequired = true) Integer SpotCount;
   private final @ModelField(targetType="Spot") @HasMany(associatedWith = "DeckID", type = Spot.class) List<Spot> Spots = null;
   private final @ModelField(targetType="Address", isRequired = true) Address Address;
+  private final @ModelField(targetType="String", isRequired = true) String WhoIsAllowed;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -79,6 +81,10 @@ public final class Deck implements Model {
       return Address;
   }
   
+  public String getWhoIsAllowed() {
+      return WhoIsAllowed;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -87,7 +93,7 @@ public final class Deck implements Model {
       return updatedAt;
   }
   
-  private Deck(String id, String DeckName, Integer Levels, String Latitude, String Longitude, Integer SpotCount, Address Address) {
+  private Deck(String id, String DeckName, Integer Levels, String Latitude, String Longitude, Integer SpotCount, Address Address, String WhoIsAllowed) {
     this.id = id;
     this.DeckName = DeckName;
     this.Levels = Levels;
@@ -95,6 +101,7 @@ public final class Deck implements Model {
     this.Longitude = Longitude;
     this.SpotCount = SpotCount;
     this.Address = Address;
+    this.WhoIsAllowed = WhoIsAllowed;
   }
   
   @Override
@@ -112,6 +119,7 @@ public final class Deck implements Model {
               ObjectsCompat.equals(getLongitude(), deck.getLongitude()) &&
               ObjectsCompat.equals(getSpotCount(), deck.getSpotCount()) &&
               ObjectsCompat.equals(getAddress(), deck.getAddress()) &&
+              ObjectsCompat.equals(getWhoIsAllowed(), deck.getWhoIsAllowed()) &&
               ObjectsCompat.equals(getCreatedAt(), deck.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), deck.getUpdatedAt());
       }
@@ -127,6 +135,7 @@ public final class Deck implements Model {
       .append(getLongitude())
       .append(getSpotCount())
       .append(getAddress())
+      .append(getWhoIsAllowed())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -144,6 +153,7 @@ public final class Deck implements Model {
       .append("Longitude=" + String.valueOf(getLongitude()) + ", ")
       .append("SpotCount=" + String.valueOf(getSpotCount()) + ", ")
       .append("Address=" + String.valueOf(getAddress()) + ", ")
+      .append("WhoIsAllowed=" + String.valueOf(getWhoIsAllowed()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -170,6 +180,7 @@ public final class Deck implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -181,7 +192,8 @@ public final class Deck implements Model {
       Latitude,
       Longitude,
       SpotCount,
-      Address);
+      Address,
+      WhoIsAllowed);
   }
   public interface DeckNameStep {
     LevelsStep deckName(String deckName);
@@ -199,7 +211,12 @@ public final class Deck implements Model {
   
 
   public interface AddressStep {
-    BuildStep address(Address address);
+    WhoIsAllowedStep address(Address address);
+  }
+  
+
+  public interface WhoIsAllowedStep {
+    BuildStep whoIsAllowed(String whoIsAllowed);
   }
   
 
@@ -211,12 +228,13 @@ public final class Deck implements Model {
   }
   
 
-  public static class Builder implements DeckNameStep, LevelsStep, SpotCountStep, AddressStep, BuildStep {
+  public static class Builder implements DeckNameStep, LevelsStep, SpotCountStep, AddressStep, WhoIsAllowedStep, BuildStep {
     private String id;
     private String DeckName;
     private Integer Levels;
     private Integer SpotCount;
     private Address Address;
+    private String WhoIsAllowed;
     private String Latitude;
     private String Longitude;
     @Override
@@ -230,7 +248,8 @@ public final class Deck implements Model {
           Latitude,
           Longitude,
           SpotCount,
-          Address);
+          Address,
+          WhoIsAllowed);
     }
     
     @Override
@@ -255,9 +274,16 @@ public final class Deck implements Model {
     }
     
     @Override
-     public BuildStep address(Address address) {
+     public WhoIsAllowedStep address(Address address) {
         Objects.requireNonNull(address);
         this.Address = address;
+        return this;
+    }
+    
+    @Override
+     public BuildStep whoIsAllowed(String whoIsAllowed) {
+        Objects.requireNonNull(whoIsAllowed);
+        this.WhoIsAllowed = whoIsAllowed;
         return this;
     }
     
@@ -285,12 +311,13 @@ public final class Deck implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String deckName, Integer levels, String latitude, String longitude, Integer spotCount, Address address) {
+    private CopyOfBuilder(String id, String deckName, Integer levels, String latitude, String longitude, Integer spotCount, Address address, String whoIsAllowed) {
       super.id(id);
       super.deckName(deckName)
         .levels(levels)
         .spotCount(spotCount)
         .address(address)
+        .whoIsAllowed(whoIsAllowed)
         .latitude(latitude)
         .longitude(longitude);
     }
@@ -313,6 +340,11 @@ public final class Deck implements Model {
     @Override
      public CopyOfBuilder address(Address address) {
       return (CopyOfBuilder) super.address(address);
+    }
+    
+    @Override
+     public CopyOfBuilder whoIsAllowed(String whoIsAllowed) {
+      return (CopyOfBuilder) super.whoIsAllowed(whoIsAllowed);
     }
     
     @Override
