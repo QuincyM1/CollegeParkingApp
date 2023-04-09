@@ -116,8 +116,6 @@ public class ParkingLot {
         lotAvailable = true;
     }
 
-    //Sedy is still working on this downwards
-    //closing or opening a parking spot through the parking lot class
     public void closeParking(Parking parking) {
         if(parkings.contains(parking) == false) {
             System.out.println("Parking spot does not exist in this parking lot.");
@@ -126,14 +124,11 @@ public class ParkingLot {
         else{
             for (int i = 0; i < parkings.size(); i++) {
                 if(parkings.get(i).getParkingID() == parking.getParkingID()) {
-                    parkings.get(i).setParkingStatus("Closed");
-                    parkings.get(i).setParkingAvailable(false);
+                    parkings.get(i).closeParking();
                 }
             }
 
-            parking.setParkingStatus("Closed");
-            parking.setParkingAvailable(false);
-        }
+            parking.closeParking();
     }
     public void openParking(Parking parking) {
         if(parkings.contains(parking) == false) {
@@ -143,16 +138,30 @@ public class ParkingLot {
         else{
             for (int i = 0; i < parkings.size(); i++) {
                 if(parkings.get(i).getParkingID() == parking.getParkingID()) {
-                    parkings.get(i).setParkingStatus("Open");
-                    parkings.get(i).setParkingAvailable(true);
+                    parkings.get(i).openParking();
                 }
             }
 
-            parking.setParkingStatus("Open");
-            parking.setParkingAvailable(true);
+            parking.openParking();
         }
     }
-    //Sedy is still working on this upwards
+
+    public void maintainParking(Parking parking) {
+        if(parkings.contains(parking) == false) {
+            System.out.println("Parking spot does not exist in this parking lot.");
+            return;
+        }
+        else{
+            for (int i = 0; i < parkings.size(); i++) {
+                if(parkings.get(i).getParkingID() == parking.getParkingID()) {
+                    parkings.get(i).parkingMaintenance();
+                }
+            }
+
+            parking.parkingMaintenance();
+        }
+    }
+
 
     public void printParkingLot() {
         System.out.println("Parking Lot ID: " + parkingLotID);
