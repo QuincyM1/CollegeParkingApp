@@ -68,8 +68,8 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
                         return true;
                     case R.id.account:
                         spinner.setVisibility(View.GONE);
-                        Account account = new Account();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, account).commit();
+                        AccountPane accountPane = new AccountPane();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, accountPane).commit();
                         return true;
                 }
                 return false;

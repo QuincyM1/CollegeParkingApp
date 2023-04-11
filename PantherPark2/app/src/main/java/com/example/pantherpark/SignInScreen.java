@@ -55,6 +55,9 @@ public class SignInScreen extends AppCompatActivity {
         email = emailField.getText().toString().trim();
         password = passwordField.getText().toString().trim();
 
+        //Clear error label of any errors, if applicable
+        clearErrors();
+
         // Authenticate with the backend server
         Amplify.Auth.signIn(
                 email,
