@@ -55,16 +55,10 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch(item.getItemId()) {
-                    case R.id.park:
+                    case R.id.parking:
                         spinner.setVisibility(View.VISIBLE);
                         Park park = new Park();
                         getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
-                        return true;
-                    case R.id.reservation:
-                        spinner.setVisibility(View.GONE);
-
-                        Reservation reservation = new Reservation();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, reservation).commit();
                         return true;
                     case R.id.account:
                         spinner.setVisibility(View.GONE);

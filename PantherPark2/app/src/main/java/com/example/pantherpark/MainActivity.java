@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     case SUCCESS:
                                         Log.i("AuthQuickStart", "IdentityId: " + cognitoAuthSession.getIdentityIdResult().getValue());
 
-                                        Intent intent1 = new Intent(MainActivity.this, HomePage.class);
+                                        Intent intent1 = new Intent(MainActivity.this, Park.class);
                                         startActivity(intent1);
                                         finish();
 

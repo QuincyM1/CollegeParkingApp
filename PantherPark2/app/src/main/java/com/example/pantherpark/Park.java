@@ -1,64 +1,162 @@
 package com.example.pantherpark;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Park#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Park extends Fragment {
+import com.google.android.gms.maps.*;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
-    public Park() {
-        // Required empty public constructor
-    }
+public class Park extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Park.
+    /* ToDo: add onClick instances for existing and future buttons/lists,
+        add responses to bottom nav options (Account, Park, Reservation),
+
      */
-    // TODO: Rename and change types and number of parameters
-    public static Park newInstance(String param1, String param2) {
-        Park fragment = new Park();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    Spinner spinner;
+    ArrayAdapter<CharSequence> adapter;
+    BottomNavigationView bottomNavigationView;
+    boolean isPermissionGranted;
+
+    LatLng selection = new LatLng(0,0);
+
+    GoogleMap mMap;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        setContentView(R.layout.activity_home_page);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
         }
+
+        //check permissions for map
+        //set up map
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+        mapFragment.getMapAsync(this);
+        //set up bottom navigation
+        bottomNavigationView = findViewById(R.id.bottomNavigationView2);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.parking:
+                        spinner.setVisibility(View.VISIBLE);
+                        Parking park = new Parking();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
+                        return true;
+                    case R.id.account:
+                        spinner.setVisibility(View.GONE);
+                        AccountPane accountPane = new AccountPane();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, accountPane).commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        //mapview inside of frame located in activity_home_page xml
+        //Spinner showing list of destinations
+        spinner = (Spinner) findViewById(R.id.spinner);
+        adapter = ArrayAdapter.createFromResource(this, R.array.destinations, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // if user selects [Select A Destination]
+                if (adapterView.getItemAtPosition(i).equals("Select a Destination")) {
+                    clearMarker(mMap);
+                    Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
+                    resetPosition(mMap);
+                }
+                if (adapterView.getItemAtPosition(i).equals("Classroom South")) {
+                    clearMarker(mMap);
+                    selection = new LatLng(33.7527011, -84.3874148);
+                    makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
+
+                }
+                //Gets destination from user selection and creates a string
+                String destinationToText = spinner.getSelectedItem().toString();
+                // ToDo: add prompt to find closest decks and display them onscreen
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
     }
 
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_park, container, false);
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+        mMap = googleMap;
+    }
+
+
+    public void makePosition(@NonNull GoogleMap googleMap, LatLng LL, String s) {
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(LL).zoom(18).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
+        googleMap.addMarker(new MarkerOptions().position(selection).title(s));
+    }
+    public void resetPosition(@NonNull GoogleMap googleMap){
+        LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(14).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+    }
+
+    public void clearMarker(@NonNull GoogleMap googleMap) {
+        googleMap.clear();
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
