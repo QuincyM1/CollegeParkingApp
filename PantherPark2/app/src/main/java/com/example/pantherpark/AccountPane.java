@@ -68,6 +68,8 @@ public class AccountPane extends Fragment implements View.OnClickListener {
 
     }
 
+    /*
+
     public void signOut(View view){
 
         Amplify.Auth.signOut(new Consumer<AuthSignOutResult>() {
@@ -92,14 +94,15 @@ public class AccountPane extends Fragment implements View.OnClickListener {
 
 
     }
+     */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.activity_account_pane, container, false);
-        signOutButton = view.findViewById(R.id.signoutButton);
-        signOutButton.setOnClickListener(this::signOut);
+        //signOutButton = view.findViewById(R.id.signoutButton);
+        //signOutButton.setOnClickListener(this::signOut);
         return view;
     }
 

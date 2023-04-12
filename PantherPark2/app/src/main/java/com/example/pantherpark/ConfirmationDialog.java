@@ -49,7 +49,7 @@ public class ConfirmationDialog extends DialogFragment {
             public void onClick(View v) {
 
                 getActivity().finish();
-                startActivity(new Intent(parentView.getContext(), HomePage.class));
+                startActivity(new Intent(parentView.getContext(), Park.class));
                 getDialog().dismiss();
             }
         });

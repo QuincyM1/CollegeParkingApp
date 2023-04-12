@@ -58,16 +58,16 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
                 switch(item.getItemId()) {
                     case R.id.parking:
                         spinner.setVisibility(View.VISIBLE);
-                        Parking park = new Parking();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
+                        //Parking park = new Parking();
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
                         return true;
                     case R.id.account:
                         spinner.setVisibility(View.GONE);
-                        //Intent intent1 = new Intent(Park.this, AccountPane.class);
-                        //startActivity(intent1);
+                        Intent intent = new Intent(Park.this, AccountScreen.class);
+                        startActivity(intent);
                         //finish();
-                        AccountPane accountPane = new AccountPane();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, accountPane).commit();
+                        //AccountPane accountPane = new AccountPane();
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, accountPane).commit();
                         return true;
                 }
                 return false;

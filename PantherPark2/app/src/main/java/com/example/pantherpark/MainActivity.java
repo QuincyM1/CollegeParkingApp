@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
-            Log.i("Amplify", "Initialized Amplify");
+            Log.i("Amplify_LAUNCH", "Initialized Amplify");
         } catch (AmplifyException error) {
-            Log.e("Amplify", "Could not initialize Amplify", error);
+            Log.e("Amplify_LAUNCH", "Could not initialize Amplify or it is already initialized", error);
         }
 
         new Timer().schedule(new TimerTask() {

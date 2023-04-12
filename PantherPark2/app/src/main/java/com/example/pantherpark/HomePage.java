@@ -23,10 +23,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class HomePage extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
-    /* ToDo: add onClick instances for existing and future buttons/lists,
-        add responses to bottom nav options (Account, Park, Reservation),
-
-     */
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     BottomNavigationView bottomNavigationView;
@@ -49,7 +45,11 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
         SupportMapFragment mapFragment = SupportMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
         mapFragment.getMapAsync(this);
-        //set up bottom navigation
+
+
+
+
+        //Bottom navigation MENU OC CLICK LISTENER
         bottomNavigationView = findViewById(R.id.bottomNavigationView2);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
