@@ -24,5 +24,6 @@
     <color name="link_color">#2779F6</color>
     <color name="error_red">#CC0000</color>
     <color name="success_green">#1FAC00</color>
+    <color name="gray">#879099</color>
 
 </resources>

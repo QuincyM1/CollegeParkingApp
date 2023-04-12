@@ -6,19 +6,51 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
 import com.amplifyframework.auth.result.AuthSignOutResult;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.Consumer;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class AccountScreen extends AppCompatActivity {
+
+    private BottomNavigationView menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_screen);
+
+        menu = findViewById(R.id.bottomMenuAccount);
+        menu.setSelectedItemId(R.id.account);
+        menu.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                // Check which user selected
+                switch(item.getItemId()) {
+                    case R.id.parking:
+
+                        //Quit the account screen and go back
+                        finish();
+
+                        return true;
+                    case R.id.account:
+
+                        //Do nothing, just stay on the current page
+
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+
     }
 
     public void signOut(View view) {
