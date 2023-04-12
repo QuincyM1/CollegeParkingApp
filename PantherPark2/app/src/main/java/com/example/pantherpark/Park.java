@@ -84,7 +84,6 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // if user selects [Select A Destination]
-                //makePosition(mMap, getDeckLatLng(adapterView.getItemAtPosition(i).toString()), adapterView.getItemAtPosition(i).toString());
                 if (adapterView.getItemAtPosition(i).equals("Select a Destination")) {
                     clearMarker(mMap);
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
@@ -96,6 +95,7 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
                     makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
 
                 }
+                //makePosition(mMap, getDeckLatLng(adapterView.getItemAtPosition(i).toString()), adapterView.getItemAtPosition(i).toString());
 
 
                 //Gets destination from user selection and creates a string
