@@ -83,12 +83,12 @@ public class AccountPane extends Fragment implements View.OnClickListener {
 
 
 
-        Intent intent = new Intent(getActivity().getApplicationContext(), SignInScreen.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
 
         getParentFragmentManager().beginTransaction().remove(this).commit();
-        getActivity().finish();
+        //getActivity().finish();
 
 
     }

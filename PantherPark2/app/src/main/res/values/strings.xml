@@ -27,6 +27,25 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="strings">Enter Parking Lot ID</string>
     <!-- Spinner for HomePage Destination Dropdown -->
+    <string-array name="decks">
+        <item> Select a Destination </item>
+        <item> 75 Piedmont </item>
+        <item> A Deck </item>
+        <item> B Deck </item>
+        <item> Blue Lots </item>
+        <item> C Deck </item>
+        <item> College of Law </item>
+        <item> G Deck </item>
+        <item> Green Lot </item>
+        <item> I Deck </item>
+        <item> K Deck </item>
+        <item> M Deck </item>
+        <item> N Deck </item>
+        <item> S Deck </item>
+        <item> T Deck </item>
+        <item> U Deck </item>
+        <item> W Deck </item>
+    </string-array>
     <string-array name="destinations">
         <item> Select a Destination </item>
         <item>	Student Center West	</item>

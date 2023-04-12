@@ -57,7 +57,7 @@ public class HomePage extends AppCompatActivity implements OnMapReadyCallback, A
                 switch(item.getItemId()) {
                     case R.id.parking:
                         spinner.setVisibility(View.VISIBLE);
-                        Park park = new Park();
+                        Parking park = new Parking();
                         getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
                         return true;
                     case R.id.account:

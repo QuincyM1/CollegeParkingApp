@@ -24,6 +24,14 @@
             android:name=".HomePage"
             android:label="Home"
             android:exported="false" />
+        <activity
+            android:name=".Park"
+            android:label="Parking"
+            android:exported="false" />
+        <activity
+            android:name=".AccountPane"
+            android:label="Account"
+            android:exported="false"/>
 
         <activity android:name=".AddParkingLot" />
 

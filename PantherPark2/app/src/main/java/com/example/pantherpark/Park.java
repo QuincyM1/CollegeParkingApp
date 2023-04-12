@@ -3,6 +3,7 @@ package com.example.pantherpark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,7 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.fragment_park);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -47,7 +48,7 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
         //check permissions for map
         //set up map
         SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
         mapFragment.getMapAsync(this);
         //set up bottom navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView2);
@@ -62,6 +63,9 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
                         return true;
                     case R.id.account:
                         spinner.setVisibility(View.GONE);
+                        //Intent intent1 = new Intent(Park.this, AccountPane.class);
+                        //startActivity(intent1);
+                        //finish();
                         AccountPane accountPane = new AccountPane();
                         getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, accountPane).commit();
                         return true;
@@ -73,7 +77,7 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
         //mapview inside of frame located in activity_home_page xml
         //Spinner showing list of destinations
         spinner = (Spinner) findViewById(R.id.spinner);
-        adapter = ArrayAdapter.createFromResource(this, R.array.destinations, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.decks, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -85,12 +89,13 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
                     resetPosition(mMap);
                 }
-                if (adapterView.getItemAtPosition(i).equals("Classroom South")) {
+                if (adapterView.getItemAtPosition(i).equals("B Deck")) {
                     clearMarker(mMap);
-                    selection = new LatLng(33.7527011, -84.3874148);
+                    selection = new LatLng(33.7521941, -84.3856621);
                     makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
 
                 }
+
                 //Gets destination from user selection and creates a string
                 String destinationToText = spinner.getSelectedItem().toString();
                 // ToDo: add prompt to find closest decks and display them onscreen
