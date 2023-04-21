@@ -74,7 +74,7 @@ public class SignInScreen extends AppCompatActivity {
                         clearErrors();
 
                         // Go to homepage if all sign in is a success
-                        Intent intent = new Intent(getApplicationContext(), Park.class);
+                        Intent intent = new Intent(getApplicationContext(), ParkScreen.class);
                         startActivity(intent);
                         finish();
                     }

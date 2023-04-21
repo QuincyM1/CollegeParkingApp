@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class Park extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
+public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
     /* ToDo: add onClick instances for existing and future buttons/lists,
         add responses to bottom nav options (Account, Park, Reservation),
@@ -32,14 +32,14 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
     ArrayAdapter<CharSequence> adapter;
     BottomNavigationView bottomNavigationView;
 
-    LatLng selection = new LatLng(0,0);
+    LatLng selection = new LatLng(0, 0);
 
     GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_park);
+        setContentView(R.layout.activity_park_screen);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -54,7 +54,7 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.parking:
                         spinner.setVisibility(View.VISIBLE);
                         //Parking park = new Parking();
@@ -63,7 +63,7 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
                     case R.id.account:
                         bottomNavigationView.setSelectedItemId(R.id.parking);
                         spinner.setVisibility(View.GONE);
-                        Intent intent = new Intent(Park.this, AccountScreen.class);
+                        Intent intent = new Intent(ParkScreen.this, AccountScreen.class);
                         startActivity(intent);
 
                         //finish();
@@ -114,7 +114,6 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
     }
 
 
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         LatLng InitialPosition = new LatLng(33.7488, -84.3877);
@@ -139,7 +138,8 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
         //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
         googleMap.addMarker(new MarkerOptions().position(selection).title(s));
     }
-    public void resetPosition(@NonNull GoogleMap googleMap){
+
+    public void resetPosition(@NonNull GoogleMap googleMap) {
         LatLng InitialPosition = new LatLng(33.7488, -84.3877);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(14).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
@@ -159,10 +159,12 @@ public class Park extends AppCompatActivity implements OnMapReadyCallback, Adapt
     public void clearMarker(@NonNull GoogleMap googleMap) {
         googleMap.clear();
     }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
+
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 

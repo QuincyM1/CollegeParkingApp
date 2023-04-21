@@ -24,7 +24,7 @@
             android:name=".SignInScreen"
             android:exported="false" />
         <activity
-            android:name=".Park"
+            android:name=".ParkScreen"
             android:label="Park"
             android:exported="false"/>
         <activity

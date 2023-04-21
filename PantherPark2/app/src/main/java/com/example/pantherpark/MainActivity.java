@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
-import android.os.Handler;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     case SUCCESS:
                                         Log.i("AuthQuickStart", "IdentityId: " + cognitoAuthSession.getIdentityIdResult().getValue());
 
-                                        Intent intent1 = new Intent(MainActivity.this, Park.class);
+                                        Intent intent1 = new Intent(MainActivity.this, ParkScreen.class);
                                         startActivity(intent1);
                                         finish();
 

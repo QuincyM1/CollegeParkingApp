@@ -22,8 +22,12 @@ public class AccountScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_screen);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         menu = findViewById(R.id.bottomMenuAccount);
         menu.setSelectedItemId(R.id.account);
@@ -32,7 +36,7 @@ public class AccountScreen extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 // Check which user selected
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.parking:
 
                         //Quit the account screen and go back
