@@ -24,10 +24,6 @@
             android:name=".SignInScreen"
             android:exported="false" />
         <activity
-            android:name=".HomePage"
-            android:label="Home"
-            android:exported="false" />
-        <activity
             android:name=".Park"
             android:label="Park"
             android:exported="false"/>
