@@ -39,7 +39,6 @@ type Card @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["User"],
 type Sensor @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
   id: ID!
   ModelNumber: Int
-  SerialNumber: Int
   Status: Int!
   Spot: Spot @hasOne
 }
@@ -56,7 +55,7 @@ type Spot @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [
 type Deck @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [create, update, delete, read]}]) {
   id: ID!
   DeckName: String!
-  Levels: Int!
+  Levels: Int
   Latitude: String
   Longitude: String
   SpotCount: Int!

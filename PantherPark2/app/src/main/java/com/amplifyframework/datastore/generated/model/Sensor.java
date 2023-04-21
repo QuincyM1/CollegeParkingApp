@@ -28,12 +28,10 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class Sensor implements Model {
   public static final QueryField ID = field("Sensor", "id");
   public static final QueryField MODEL_NUMBER = field("Sensor", "ModelNumber");
-  public static final QueryField SERIAL_NUMBER = field("Sensor", "SerialNumber");
   public static final QueryField STATUS = field("Sensor", "Status");
   public static final QueryField SENSOR_SPOT_ID = field("Sensor", "sensorSpotId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="Int") Integer ModelNumber;
-  private final @ModelField(targetType="Int") Integer SerialNumber;
   private final @ModelField(targetType="Int", isRequired = true) Integer Status;
   private final @ModelField(targetType="Spot") @HasOne(associatedWith = "id", type = Spot.class) Spot Spot = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
@@ -49,10 +47,6 @@ public final class Sensor implements Model {
   
   public Integer getModelNumber() {
       return ModelNumber;
-  }
-  
-  public Integer getSerialNumber() {
-      return SerialNumber;
   }
   
   public Integer getStatus() {
@@ -75,10 +69,9 @@ public final class Sensor implements Model {
       return sensorSpotId;
   }
   
-  private Sensor(String id, Integer ModelNumber, Integer SerialNumber, Integer Status, String sensorSpotId) {
+  private Sensor(String id, Integer ModelNumber, Integer Status, String sensorSpotId) {
     this.id = id;
     this.ModelNumber = ModelNumber;
-    this.SerialNumber = SerialNumber;
     this.Status = Status;
     this.sensorSpotId = sensorSpotId;
   }
@@ -93,7 +86,6 @@ public final class Sensor implements Model {
       Sensor sensor = (Sensor) obj;
       return ObjectsCompat.equals(getId(), sensor.getId()) &&
               ObjectsCompat.equals(getModelNumber(), sensor.getModelNumber()) &&
-              ObjectsCompat.equals(getSerialNumber(), sensor.getSerialNumber()) &&
               ObjectsCompat.equals(getStatus(), sensor.getStatus()) &&
               ObjectsCompat.equals(getCreatedAt(), sensor.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), sensor.getUpdatedAt()) &&
@@ -106,7 +98,6 @@ public final class Sensor implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getModelNumber())
-      .append(getSerialNumber())
       .append(getStatus())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -121,7 +112,6 @@ public final class Sensor implements Model {
       .append("Sensor {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("ModelNumber=" + String.valueOf(getModelNumber()) + ", ")
-      .append("SerialNumber=" + String.valueOf(getSerialNumber()) + ", ")
       .append("Status=" + String.valueOf(getStatus()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()) + ", ")
@@ -147,7 +137,6 @@ public final class Sensor implements Model {
       id,
       null,
       null,
-      null,
       null
     );
   }
@@ -155,7 +144,6 @@ public final class Sensor implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       ModelNumber,
-      SerialNumber,
       Status,
       sensorSpotId);
   }
@@ -168,7 +156,6 @@ public final class Sensor implements Model {
     Sensor build();
     BuildStep id(String id);
     BuildStep modelNumber(Integer modelNumber);
-    BuildStep serialNumber(Integer serialNumber);
     BuildStep sensorSpotId(String sensorSpotId);
   }
   
@@ -177,7 +164,6 @@ public final class Sensor implements Model {
     private String id;
     private Integer Status;
     private Integer ModelNumber;
-    private Integer SerialNumber;
     private String sensorSpotId;
     @Override
      public Sensor build() {
@@ -186,7 +172,6 @@ public final class Sensor implements Model {
         return new Sensor(
           id,
           ModelNumber,
-          SerialNumber,
           Status,
           sensorSpotId);
     }
@@ -201,12 +186,6 @@ public final class Sensor implements Model {
     @Override
      public BuildStep modelNumber(Integer modelNumber) {
         this.ModelNumber = modelNumber;
-        return this;
-    }
-    
-    @Override
-     public BuildStep serialNumber(Integer serialNumber) {
-        this.SerialNumber = serialNumber;
         return this;
     }
     
@@ -228,11 +207,10 @@ public final class Sensor implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, Integer modelNumber, Integer serialNumber, Integer status, String sensorSpotId) {
+    private CopyOfBuilder(String id, Integer modelNumber, Integer status, String sensorSpotId) {
       super.id(id);
       super.status(status)
         .modelNumber(modelNumber)
-        .serialNumber(serialNumber)
         .sensorSpotId(sensorSpotId);
     }
     
@@ -244,11 +222,6 @@ public final class Sensor implements Model {
     @Override
      public CopyOfBuilder modelNumber(Integer modelNumber) {
       return (CopyOfBuilder) super.modelNumber(modelNumber);
-    }
-    
-    @Override
-     public CopyOfBuilder serialNumber(Integer serialNumber) {
-      return (CopyOfBuilder) super.serialNumber(serialNumber);
     }
     
     @Override

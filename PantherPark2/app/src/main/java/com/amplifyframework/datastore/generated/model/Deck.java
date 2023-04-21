@@ -36,7 +36,7 @@ public final class Deck implements Model {
   public static final QueryField WHO_IS_ALLOWED = field("Deck", "WhoIsAllowed");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String DeckName;
-  private final @ModelField(targetType="Int", isRequired = true) Integer Levels;
+  private final @ModelField(targetType="Int") Integer Levels;
   private final @ModelField(targetType="String") String Latitude;
   private final @ModelField(targetType="String") String Longitude;
   private final @ModelField(targetType="Int", isRequired = true) Integer SpotCount;
@@ -196,12 +196,7 @@ public final class Deck implements Model {
       WhoIsAllowed);
   }
   public interface DeckNameStep {
-    LevelsStep deckName(String deckName);
-  }
-  
-
-  public interface LevelsStep {
-    SpotCountStep levels(Integer levels);
+    SpotCountStep deckName(String deckName);
   }
   
 
@@ -223,18 +218,19 @@ public final class Deck implements Model {
   public interface BuildStep {
     Deck build();
     BuildStep id(String id);
+    BuildStep levels(Integer levels);
     BuildStep latitude(String latitude);
     BuildStep longitude(String longitude);
   }
   
 
-  public static class Builder implements DeckNameStep, LevelsStep, SpotCountStep, AddressStep, WhoIsAllowedStep, BuildStep {
+  public static class Builder implements DeckNameStep, SpotCountStep, AddressStep, WhoIsAllowedStep, BuildStep {
     private String id;
     private String DeckName;
-    private Integer Levels;
     private Integer SpotCount;
     private Address Address;
     private String WhoIsAllowed;
+    private Integer Levels;
     private String Latitude;
     private String Longitude;
     @Override
@@ -253,16 +249,9 @@ public final class Deck implements Model {
     }
     
     @Override
-     public LevelsStep deckName(String deckName) {
+     public SpotCountStep deckName(String deckName) {
         Objects.requireNonNull(deckName);
         this.DeckName = deckName;
-        return this;
-    }
-    
-    @Override
-     public SpotCountStep levels(Integer levels) {
-        Objects.requireNonNull(levels);
-        this.Levels = levels;
         return this;
     }
     
@@ -284,6 +273,12 @@ public final class Deck implements Model {
      public BuildStep whoIsAllowed(String whoIsAllowed) {
         Objects.requireNonNull(whoIsAllowed);
         this.WhoIsAllowed = whoIsAllowed;
+        return this;
+    }
+    
+    @Override
+     public BuildStep levels(Integer levels) {
+        this.Levels = levels;
         return this;
     }
     
@@ -314,10 +309,10 @@ public final class Deck implements Model {
     private CopyOfBuilder(String id, String deckName, Integer levels, String latitude, String longitude, Integer spotCount, Address address, String whoIsAllowed) {
       super.id(id);
       super.deckName(deckName)
-        .levels(levels)
         .spotCount(spotCount)
         .address(address)
         .whoIsAllowed(whoIsAllowed)
+        .levels(levels)
         .latitude(latitude)
         .longitude(longitude);
     }
@@ -325,11 +320,6 @@ public final class Deck implements Model {
     @Override
      public CopyOfBuilder deckName(String deckName) {
       return (CopyOfBuilder) super.deckName(deckName);
-    }
-    
-    @Override
-     public CopyOfBuilder levels(Integer levels) {
-      return (CopyOfBuilder) super.levels(levels);
     }
     
     @Override
@@ -345,6 +335,11 @@ public final class Deck implements Model {
     @Override
      public CopyOfBuilder whoIsAllowed(String whoIsAllowed) {
       return (CopyOfBuilder) super.whoIsAllowed(whoIsAllowed);
+    }
+    
+    @Override
+     public CopyOfBuilder levels(Integer levels) {
+      return (CopyOfBuilder) super.levels(levels);
     }
     
     @Override
