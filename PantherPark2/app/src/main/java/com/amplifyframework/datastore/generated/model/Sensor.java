@@ -31,7 +31,7 @@ public final class Sensor implements Model {
   public static final QueryField STATUS = field("Sensor", "Status");
   public static final QueryField SENSOR_SPOT_ID = field("Sensor", "sensorSpotId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="Int") Integer ModelNumber;
+  private final @ModelField(targetType="String", isRequired = true) String ModelNumber;
   private final @ModelField(targetType="Int", isRequired = true) Integer Status;
   private final @ModelField(targetType="Spot") @HasOne(associatedWith = "id", type = Spot.class) Spot Spot = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
@@ -45,7 +45,7 @@ public final class Sensor implements Model {
       return id;
   }
   
-  public Integer getModelNumber() {
+  public String getModelNumber() {
       return ModelNumber;
   }
   
@@ -69,7 +69,7 @@ public final class Sensor implements Model {
       return sensorSpotId;
   }
   
-  private Sensor(String id, Integer ModelNumber, Integer Status, String sensorSpotId) {
+  private Sensor(String id, String ModelNumber, Integer Status, String sensorSpotId) {
     this.id = id;
     this.ModelNumber = ModelNumber;
     this.Status = Status;
@@ -120,7 +120,7 @@ public final class Sensor implements Model {
       .toString();
   }
   
-  public static StatusStep builder() {
+  public static ModelNumberStep builder() {
       return new Builder();
   }
   
@@ -147,6 +147,11 @@ public final class Sensor implements Model {
       Status,
       sensorSpotId);
   }
+  public interface ModelNumberStep {
+    StatusStep modelNumber(String modelNumber);
+  }
+  
+
   public interface StatusStep {
     BuildStep status(Integer status);
   }
@@ -155,15 +160,14 @@ public final class Sensor implements Model {
   public interface BuildStep {
     Sensor build();
     BuildStep id(String id);
-    BuildStep modelNumber(Integer modelNumber);
     BuildStep sensorSpotId(String sensorSpotId);
   }
   
 
-  public static class Builder implements StatusStep, BuildStep {
+  public static class Builder implements ModelNumberStep, StatusStep, BuildStep {
     private String id;
+    private String ModelNumber;
     private Integer Status;
-    private Integer ModelNumber;
     private String sensorSpotId;
     @Override
      public Sensor build() {
@@ -177,15 +181,16 @@ public final class Sensor implements Model {
     }
     
     @Override
-     public BuildStep status(Integer status) {
-        Objects.requireNonNull(status);
-        this.Status = status;
+     public StatusStep modelNumber(String modelNumber) {
+        Objects.requireNonNull(modelNumber);
+        this.ModelNumber = modelNumber;
         return this;
     }
     
     @Override
-     public BuildStep modelNumber(Integer modelNumber) {
-        this.ModelNumber = modelNumber;
+     public BuildStep status(Integer status) {
+        Objects.requireNonNull(status);
+        this.Status = status;
         return this;
     }
     
@@ -207,21 +212,21 @@ public final class Sensor implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, Integer modelNumber, Integer status, String sensorSpotId) {
+    private CopyOfBuilder(String id, String modelNumber, Integer status, String sensorSpotId) {
       super.id(id);
-      super.status(status)
-        .modelNumber(modelNumber)
+      super.modelNumber(modelNumber)
+        .status(status)
         .sensorSpotId(sensorSpotId);
+    }
+    
+    @Override
+     public CopyOfBuilder modelNumber(String modelNumber) {
+      return (CopyOfBuilder) super.modelNumber(modelNumber);
     }
     
     @Override
      public CopyOfBuilder status(Integer status) {
       return (CopyOfBuilder) super.status(status);
-    }
-    
-    @Override
-     public CopyOfBuilder modelNumber(Integer modelNumber) {
-      return (CopyOfBuilder) super.modelNumber(modelNumber);
     }
     
     @Override

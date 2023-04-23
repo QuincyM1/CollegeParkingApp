@@ -38,7 +38,7 @@ type Card @model @auth(rules: [{allow: owner}, {allow: groups, groups: ["User"],
 
 type Sensor @model @auth(rules: [{allow: groups, groups: ["Admins"], operations: [read, create, update, delete]}]) {
   id: ID!
-  ModelNumber: Int
+  ModelNumber: String!
   Status: Int!
   Spot: Spot @hasOne
 }

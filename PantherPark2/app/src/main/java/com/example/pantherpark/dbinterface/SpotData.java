@@ -2,8 +2,15 @@ package com.example.pantherpark.dbinterface;
 
 public class SpotData {
 
+    private String spotID;
     private String spotCode;
     private String deckID;
+
+    public SpotData(String spotID, String spotCode, String deckID) {
+        this.spotID = spotID;
+        this.spotCode = spotCode;
+        this.deckID = deckID;
+    }
 
     public SpotData(String spotCode, String deckID) {
         this.spotCode = spotCode;
@@ -24,5 +31,13 @@ public class SpotData {
 
     public void setDeckID(String deckID) {
         this.deckID = deckID;
+    }
+
+    public String getSpotID() {
+        return spotID;
+    }
+
+    public void setSpotID(String spotID) {
+        this.spotID = spotID;
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,11 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
-
-    /* ToDo: add onClick instances for existing and future buttons/lists,
-        add responses to bottom nav options (Account, Park, Reservation),
-
-     */
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     BottomNavigationView bottomNavigationView;
@@ -38,6 +34,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_park_screen);
         if (getSupportActionBar() != null) {
@@ -49,6 +46,8 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = SupportMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
         mapFragment.getMapAsync(this);
+
+
         //set up bottom navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView2);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -56,19 +55,16 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.parking:
-                        spinner.setVisibility(View.VISIBLE);
-                        //Parking park = new Parking();
-                        //getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, park).commit();
+
                         return true;
                     case R.id.account:
-                        bottomNavigationView.setSelectedItemId(R.id.parking);
-                        spinner.setVisibility(View.GONE);
+                        //finish();
+                        //overridePendingTransition(0, 0);
+                        //startActivity(getIntent());
+                        //overridePendingTransition(0, 0);
+
                         Intent intent = new Intent(ParkScreen.this, AccountScreen.class);
                         startActivity(intent);
-
-                        //finish();
-                        //AccountPane accountPane = new AccountPane();
-                        //getSupportFragmentManager().beginTransaction().replace(R.id.bottomNavigationView2, accountPane).commit();
                         return true;
                 }
                 return false;
@@ -112,7 +108,6 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
 
     }
-
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -169,4 +164,12 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    public static void setCheckable(BottomNavigationView view, boolean checkable) {
+        final Menu menu = view.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setCheckable(checkable);
+        }
+    }
+
 }

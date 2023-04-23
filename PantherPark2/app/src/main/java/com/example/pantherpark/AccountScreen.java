@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.amplifyframework.auth.AuthException;
+import com.amplifyframework.auth.AuthUserAttribute;
 import com.amplifyframework.auth.cognito.result.AWSCognitoAuthSignOutResult;
 import com.amplifyframework.auth.result.AuthSignOutResult;
 import com.amplifyframework.core.Amplify;
@@ -16,18 +20,56 @@ import com.amplifyframework.core.Consumer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.List;
+
 public class AccountScreen extends AppCompatActivity {
 
     private BottomNavigationView menu;
 
+    private TextView name;
+    private TextView email;
+    private LinearLayout container;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_screen);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+        name = findViewById(R.id.nameLabel);
+        email = findViewById(R.id.emailLabel);
+
+        //Fetch user information and set them on the screen
+        Amplify.Auth.fetchUserAttributes(
+                new Consumer<List<AuthUserAttribute>>() {
+                    @Override
+                    public void accept(@NonNull List<AuthUserAttribute> attributes) {
+
+                        //Log.e("IS THIS NAME?", attributes.get(0).toString());
+                        //Log.e("IS THIS EMAIL?", attributes.get(1).toString());
+                        //Log.e("ATTRIBUTESSSSSSS", attributes.toString());
+                        //System.exit(0);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                name.setText("Name: " + attributes.get(2).getValue());
+                                email.setText("Email: " + attributes.get(3).getValue());
+                            }
+                        });
+
+                        Log.i("AWS_AUTH_FETCH_USER_ATTR", "User attributes = " + attributes.toString());
+                    }
+                },
+                new Consumer<AuthException>() {
+                    @Override
+                    public void accept(@NonNull AuthException error) {
+                        Log.e("AWS_AUTH_FETCH_USER_ATTR", "Failed to fetch user attributes.", error);
+                    }
+                }
+        );
 
         menu = findViewById(R.id.bottomMenuAccount);
         menu.setSelectedItemId(R.id.account);
