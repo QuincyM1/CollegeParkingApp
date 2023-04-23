@@ -2,25 +2,10 @@ package com.example.pantherpark.dbinterface;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.amplifyframework.core.Action;
-import com.amplifyframework.core.Amplify;
-import com.amplifyframework.core.Consumer;
-import com.amplifyframework.core.model.query.Where;
-import com.amplifyframework.datastore.DataStoreException;
-import com.amplifyframework.datastore.generated.model.Deck;
-import com.amplifyframework.datastore.generated.model.Spot;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * Initialize DB Manager, then use it to get information.
- * List of methods:
- * getDeckArray() - returns DeckData objects which contain deck name, latitude, longitude
  */
 public class DBManager {
 
@@ -31,6 +16,10 @@ public class DBManager {
         Log.i("DB_MANAGER", "DB Manager Initialization complete.");
     }
 
+    /**
+     *
+     * @return An array of DeckData objects, i.e. all the Decks in the database
+     */
     public DeckData[] getDeckArray() {
 
         ArrayList<DeckData> decks = this.getDecks();
@@ -40,12 +29,44 @@ public class DBManager {
 
     /**
      * @param deckName The name/code of a Deck. Can be A Deck, Blue Lot, etc.
+     *                 Must match the Deck name listed in Database/Spinner on ParkScreen.java
+     * @return An array of SpotData objects, for a specific deck.
+     */
+    public SpotData[] getSpotArray(String deckName) {
+
+        ArrayList<SpotData> spots = getSpotsOfDeck(deckName);
+        return spots.toArray(new SpotData[spots.size()]);
+
+    }
+
+    /**
+     *
+     * @return An array of SpotData objects, for all decks.
+     */
+    public SpotData[] getAllSpotsArray() {
+
+        ArrayList<SpotData> spots = getSpots();
+        return spots.toArray(new SpotData[spots.size()]);
+
+    }
+
+
+    /**
+     * @param deckName The name/code of a Deck. Can be A Deck, Blue Lot, etc.
      *                 *                 Must match the Deck name listed in Database/Spinner on ParkScreen.java
      * @return NULL if deck name is invalid and not found, or DeckData of requested Deck.
      */
     public DeckData getDeckInformation(String deckName) {
 
         ArrayList<DeckData> decks = this.getDecks();
+
+        for (int i = 0; i < decks.size(); i++) {
+            if (decks.get(i).getDeckName().equals(deckName)) {
+                return decks.get(i);
+            }
+        }
+
+        return null;
 
         /*
         System.err.println("INSIDE GET DECK INFO METHOD");
@@ -67,37 +88,13 @@ public class DBManager {
         });
 
         System.err.println("DECKDATA OBJECT BEFORE RETURN" + deckInfo.getDeckName() + deckInfo.getLatitude() + deckInfo.getLongitude());
+        return null;
 
          */
 
-
-        for (int i = 0; i < decks.size(); i++) {
-            if (decks.get(i).getDeckName().equals(deckName)) {
-                return decks.get(i);
-            }
-        }
-
-        return null;
-
     }
 
-    /**
-     * @param deckName The name/code of a Deck. Can be A Deck, Blue Lot, etc.
-     *                 Must match the Deck name listed in Database/Spinner on ParkScreen.java
-     * @return An array of SpotData objects.
-     */
-    public SpotData[] getSpotArray(String deckName) {
-
-        ArrayList<SpotData> spots = getSpots(deckName);
-        return spots.toArray(new SpotData[spots.size()]);
-
-    }
-
-
-    private ArrayList<SpotData> getSpots(String deckName) {
-
-        DeckData deckData = getDeckInformation(deckName);
-        ArrayList<SpotData> spots = new ArrayList<>();
+    private ArrayList<SpotData> getSpotsOfDeck(String deckName) {
 
         /*
         //Get the Deck ID of the Deck to find spots in
@@ -121,6 +118,26 @@ public class DBManager {
 
         );
         */
+
+        DeckData deck = getDeckInformation(deckName);
+        String deckid = deck.getDeckID();
+
+        ArrayList<SpotData> spots = getSpots();
+        ArrayList<SpotData> spotofdeck = new ArrayList<>(0);
+
+        for (int i = 0; i < spots.size(); i++) {
+            if (spots.get(i).getDeckID().equals(deckid)) {
+                spotofdeck.add(spots.get(i));
+            }
+        }
+
+        return spotofdeck;
+
+    }
+
+    private ArrayList<SpotData> getSpots() {
+
+        ArrayList<SpotData> spots = new ArrayList<>(0);
 
         spots.add(new SpotData("6380da3a-65b1-45ab-babf-32793950bac1", "75-1-1", "f9f1484f-b7ff-4bf6-ac32-1e691a1993df"));
         spots.add(new SpotData("1aa37290-d1fd-4c3d-9524-07170adbd1cc", "75-1-2", "f9f1484f-b7ff-4bf6-ac32-1e691a1993df"));
@@ -283,25 +300,14 @@ public class DBManager {
         spots.add(new SpotData("2145a3a7-96ec-4553-b361-a92aac339cff", "W-1-9", "1be02d01-cd51-472f-ab19-bfe54fb2f454"));
         spots.add(new SpotData("846cd69b-ecc7-4bfb-9475-677d30191f7a", "W-1-10", "1be02d01-cd51-472f-ab19-bfe54fb2f454"));
 
-        DeckData deck = getDeckInformation(deckName);
-        String deckid = deck.getDeckID();
-
-        ArrayList<SpotData> spotofdeck = new ArrayList<>();
-
-        for (int i = 0; i < spots.size(); i++) {
-            if (spots.get(i).getDeckID().equals(deckid)) {
-                spotofdeck.add(spots.get(i));
-            }
-        }
-
-        return spotofdeck;
+        return spots;
 
     }
 
 
     private ArrayList<DeckData> getDecks() {
 
-        ArrayList<DeckData> decks = new ArrayList<>();
+        ArrayList<DeckData> decks = new ArrayList<>(0);
 
         /*
         Amplify.DataStore.query(Deck.class, new Consumer<Iterator<Deck>>() {
