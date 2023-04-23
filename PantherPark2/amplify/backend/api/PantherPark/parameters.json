@@ -2,7 +2,7 @@
   "AppSyncApiName": "PantherPark",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2023-04-01T02:47:53.498Z",
+  "AuthModeLastUpdated": "2023-04-23T19:16:05.405Z",
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
       "authPantherPark",

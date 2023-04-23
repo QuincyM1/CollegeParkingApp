@@ -4,17 +4,17 @@
     "apiName": "PantherPark",
     "serviceName": "AppSync",
     "defaultAuthType": {
-      "mode": "API_KEY",
-      "keyDescription": "api key description",
-      "expirationTime": 30
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authPantherPark"
     },
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
       },
       {
-        "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authPantherPark"
+        "mode": "API_KEY",
+        "keyDescription": "api key description",
+        "expirationTime": 30
       }
     ],
     "conflictResolution": {

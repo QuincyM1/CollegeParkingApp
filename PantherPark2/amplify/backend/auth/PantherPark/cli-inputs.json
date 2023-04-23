@@ -14,15 +14,11 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "PantherPark - Your Verification code: {####}",
-    "emailVerificationMessage": "Thanks for creating an account with us! Please verify yourself using the following code:\n\nVerification code: {####}\n\nSincerely, \n\nThe PantherPark Team.",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [
-      "Requires Lowercase",
-      "Requires Numbers",
-      "Requires Uppercase"
-    ],
+    "passwordPolicyCharacters": [],
     "requiredAttributes": [
       "name",
       "email"
@@ -41,12 +37,10 @@
     "usernameAttributes": [
       "email"
     ],
-    "useDefault": "manual",
+    "useDefault": "default",
     "userPoolGroups": false,
     "userPoolGroupList": [],
     "adminQueries": false,
-    "thirdPartyAuth": false,
-    "authProviders": [],
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
     "authRoleArn": {
@@ -63,6 +57,7 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "hostedUI": false
+    "hostedUI": false,
+    "authProviders": []
   }
 }

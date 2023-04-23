@@ -90,7 +90,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 DBManager dbmg = new DBManager();
-                DeckData deck = dbmg.getDeckInformation("A Deck");
+                DeckData deck = dbmg.getDeckInformation(adapterView.getItemAtPosition(i).toString());
                 // if user selects [Select A Destination]
                 if (adapterView.getItemAtPosition(i).equals("Select a Destination")) {
                     clearMarker(mMap);

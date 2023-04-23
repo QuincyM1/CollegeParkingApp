@@ -4,9 +4,17 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class DeckData {
 
+    private String deckID;
     private String deckName;
     private Double latitude;
     private Double longitude;
+
+    public DeckData(String deckID, String deckName, Double latitude, Double longitude) {
+        this.deckID = deckID;
+        this.deckName = deckName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public DeckData(String deckName, Double latitude, Double longitude) {
 
@@ -46,6 +54,14 @@ public class DeckData {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getDeckID() {
+        return deckID;
+    }
+
+    public void setDeckID(String deckID) {
+        this.deckID = deckID;
     }
 
     public LatLng getLatLng() {
