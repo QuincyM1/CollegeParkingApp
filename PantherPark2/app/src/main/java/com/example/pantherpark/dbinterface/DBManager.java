@@ -57,7 +57,7 @@ public class DBManager {
      * @return NULL if deck name is invalid and not found, or DeckData of requested Deck.
      */
     public DeckData getDeckInformation(String deckName) {
-
+        deckName = deckName.trim();
         ArrayList<DeckData> decks = this.getDecks();
 
         for (int i = 0; i < decks.size(); i++) {

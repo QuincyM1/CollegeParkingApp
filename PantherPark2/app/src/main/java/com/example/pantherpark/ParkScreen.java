@@ -3,6 +3,7 @@ package com.example.pantherpark;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -22,6 +23,9 @@ import androidx.core.app.ActivityCompat;
 import com.example.pantherpark.dbinterface.DBManager;
 import com.example.pantherpark.dbinterface.DeckData;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,7 +46,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     FusedLocationProviderClient f;
     LatLng selection = new LatLng(0, 0);
 
-    LatLng InitialPosition = new LatLng(0, 0);
+    LatLng InitialPosition;
     GoogleMap mMap;
 
     @Override
@@ -61,6 +65,8 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         getSupportFragmentManager().beginTransaction().replace(R.id.map, mapFragment).commit();
         mapFragment.getMapAsync(this);
 
+        getLocation(f);
+
         //set up bottom navigation
         bottomNavigationView = findViewById(R.id.bottomNavigationView2);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -74,7 +80,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
                         Intent intent = new Intent(ParkScreen.this, AccountScreen.class);
                         startActivity(intent);
-                        return true;
+                        return false;
                 }
                 return false;
             }
@@ -96,9 +102,11 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
                     clearMarker(mMap);
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
                     resetPosition(mMap);
-                } else {
+                }
+                else {
                     clearMarker(mMap);
                     selection = deck.getLatLng();
+                    resetPosition(mMap);
                     makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
                 }
 
@@ -130,24 +138,6 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         LatLng InitialPosition = new LatLng(33.7488, -84.3877);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
         mMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        f.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    LatLng InitialPosition = new LatLng(location.getLatitude(), location.getLongitude());
-                }
-            }
-        });
     }
 
 
@@ -170,6 +160,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
     public void resetPosition(@NonNull GoogleMap googleMap) {
         //LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+        InitialPosition = getLocation(f);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(14).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
             @Override
@@ -197,5 +188,36 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @SuppressLint("MissingPermission")
+    public LatLng getLocation(FusedLocationProviderClient f) {
+        LocationRequest mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(60000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationCallback mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        //TODO: UI updates.
+                    }
+                }
+            }
+        };
+        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
+        f.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null){
+                    InitialPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                }
+            }
+        });
+        return InitialPosition;
     }
 }

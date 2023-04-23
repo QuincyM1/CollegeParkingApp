@@ -65,8 +65,8 @@ public class DeckData {
     }
 
     public LatLng getLatLng() {
-
-        return new LatLng(this.latitude, this.longitude);
+        LatLng spot = new LatLng(this.latitude, this.longitude);
+        return spot;
 
     }
 
