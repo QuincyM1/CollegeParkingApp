@@ -25,6 +25,7 @@ import java.util.Iterator;
 public class DBManager {
 
     private String deckID;
+    private DeckData deckInfo;
 
     public DBManager() {
         Log.i("DB_MANAGER", "DB Manager Initialization complete.");
@@ -34,6 +35,28 @@ public class DBManager {
 
         ArrayList<DeckData> decks = getDecks();
         return decks.toArray(new DeckData[decks.size()]);
+
+    }
+
+    /**
+     * @param deckName The name/code of a Deck. Can be A Deck, Blue Lot, etc.
+     *                 *                 Must match the Deck name listed in Database/Spinner on ParkScreen.java
+     * @return NULL if deck name is invalid and not found, or DeckData of requested Deck.
+     */
+    public DeckData getDeckInformation(String deckName) {
+
+        //Get the Deck ID of the Deck to find spots in
+        Amplify.DataStore.query(Deck.class, Where.matches(Deck.DECK_NAME.eq(deckName)), decks -> {
+            while (decks.hasNext()) {
+                Deck deck = decks.next();
+                DBManager.this.deckInfo = new DeckData(deck.getDeckName(), deck.getLatitude(), deck.getLongitude());
+                Log.i("MyAmplifyApp", "Post: " + deck);
+            }
+        }, (Consumer<DataStoreException>) failure -> {
+            Log.e("MyAmplifyApp", "Query failed.", failure);
+        });
+
+        return deckInfo;
 
     }
 

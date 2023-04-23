@@ -58,14 +58,10 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
                         return true;
                     case R.id.account:
-                        //finish();
-                        //overridePendingTransition(0, 0);
-                        //startActivity(getIntent());
-                        //overridePendingTransition(0, 0);
 
                         Intent intent = new Intent(ParkScreen.this, AccountScreen.class);
                         startActivity(intent);
-                        return true;
+                        return false;
                 }
                 return false;
             }
