@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ConfirmationDialog extends DialogFragment {
 
@@ -46,8 +47,11 @@ public class ConfirmationDialog extends DialogFragment {
             public void onClick(View v) {
 
                 getActivity().finish();
-                startActivity(new Intent(parentView.getContext(), ParkScreen.class));
+                Intent intent = new Intent(parentView.getContext(), SignInScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 getDialog().dismiss();
+                Toast.makeText(getContext(), "Please sign in.", Toast.LENGTH_SHORT).show();
             }
         });
 

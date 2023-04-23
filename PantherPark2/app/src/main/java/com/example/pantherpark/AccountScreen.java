@@ -55,8 +55,8 @@ public class AccountScreen extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                name.setText("Name: " + attributes.get(2).getValue());
-                                email.setText("Email: " + attributes.get(3).getValue());
+                                name.setText("Name:  " + attributes.get(2).getValue());
+                                email.setText("Email:  " + attributes.get(3).getValue());
                             }
                         });
 
