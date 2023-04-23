@@ -48,36 +48,33 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void run() {
 
                 //Check to see if the user is signed in
-                Amplify.Auth.fetchAuthSession(
-                        new Consumer<AuthSession>() {
-                            @Override
-                            public void accept(@NonNull AuthSession result) {
-                                AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
-                                switch (cognitoAuthSession.getIdentityIdResult().getType()) {
-                                    case SUCCESS:
-                                        Log.i("AuthQuickStart", "IdentityId: " + cognitoAuthSession.getIdentityIdResult().getValue());
+                Amplify.Auth.fetchAuthSession(new Consumer<AuthSession>() {
+                    @Override
+                    public void accept(@NonNull AuthSession result) {
+                        AWSCognitoAuthSession cognitoAuthSession = (AWSCognitoAuthSession) result;
+                        switch (cognitoAuthSession.getIdentityIdResult().getType()) {
+                            case SUCCESS:
+                                Log.i("AuthQuickStart", "IdentityId: " + cognitoAuthSession.getIdentityIdResult().getValue());
 
-                                        Intent intent1 = new Intent(MainActivity.this, ParkScreen.class);
-                                        startActivity(intent1);
-                                        finish();
+                                Intent intent1 = new Intent(MainActivity.this, ParkScreen.class);
+                                startActivity(intent1);
+                                finish();
 
-                                        break;
-                                    case FAILURE:
-                                        Log.i("AuthQuickStart", "IdentityId not present because: " + cognitoAuthSession.getIdentityIdResult().getError().toString());
+                                break;
+                            case FAILURE:
+                                Log.i("AuthQuickStart", "IdentityId not present because: " + cognitoAuthSession.getIdentityIdResult().getError().toString());
 
-                                        Intent intent2 = new Intent(MainActivity.this, SignInScreen.class);
-                                        startActivity(intent2);
-                                        finish();
-                                }
-                            }
-                        },
-                        new Consumer<AuthException>() {
-                            @Override
-                            public void accept(@NonNull AuthException error) {
-                                Log.e("AuthQuickStart", error.toString());
-                            }
+                                Intent intent2 = new Intent(MainActivity.this, SignInScreen.class);
+                                startActivity(intent2);
+                                finish();
                         }
-                );
+                    }
+                }, new Consumer<AuthException>() {
+                    @Override
+                    public void accept(@NonNull AuthException error) {
+                        Log.e("AuthQuickStart", error.toString());
+                    }
+                });
             }
         }, 3000);
 

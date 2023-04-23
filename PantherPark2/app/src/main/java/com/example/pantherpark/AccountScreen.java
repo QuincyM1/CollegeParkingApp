@@ -42,34 +42,31 @@ public class AccountScreen extends AppCompatActivity {
         email = findViewById(R.id.emailLabel);
 
         //Fetch user information and set them on the screen
-        Amplify.Auth.fetchUserAttributes(
-                new Consumer<List<AuthUserAttribute>>() {
+        Amplify.Auth.fetchUserAttributes(new Consumer<List<AuthUserAttribute>>() {
+            @Override
+            public void accept(@NonNull List<AuthUserAttribute> attributes) {
+
+                //Log.e("IS THIS NAME?", attributes.get(0).toString());
+                //Log.e("IS THIS EMAIL?", attributes.get(1).toString());
+                //Log.e("ATTRIBUTESSSSSSS", attributes.toString());
+                //System.exit(0);
+
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void accept(@NonNull List<AuthUserAttribute> attributes) {
-
-                        //Log.e("IS THIS NAME?", attributes.get(0).toString());
-                        //Log.e("IS THIS EMAIL?", attributes.get(1).toString());
-                        //Log.e("ATTRIBUTESSSSSSS", attributes.toString());
-                        //System.exit(0);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                name.setText("Name:  " + attributes.get(2).getValue());
-                                email.setText("Email:  " + attributes.get(3).getValue());
-                            }
-                        });
-
-                        Log.i("AWS_AUTH_FETCH_USER_ATTR", "User attributes = " + attributes.toString());
+                    public void run() {
+                        name.setText("Name:  " + attributes.get(2).getValue());
+                        email.setText("Email:  " + attributes.get(3).getValue());
                     }
-                },
-                new Consumer<AuthException>() {
-                    @Override
-                    public void accept(@NonNull AuthException error) {
-                        Log.e("AWS_AUTH_FETCH_USER_ATTR", "Failed to fetch user attributes.", error);
-                    }
-                }
-        );
+                });
+
+                Log.i("AWS_AUTH_FETCH_USER_ATTR", "User attributes = " + attributes.toString());
+            }
+        }, new Consumer<AuthException>() {
+            @Override
+            public void accept(@NonNull AuthException error) {
+                Log.e("AWS_AUTH_FETCH_USER_ATTR", "Failed to fetch user attributes.", error);
+            }
+        });
 
         menu = findViewById(R.id.bottomMenuAccount);
         menu.setSelectedItemId(R.id.account);

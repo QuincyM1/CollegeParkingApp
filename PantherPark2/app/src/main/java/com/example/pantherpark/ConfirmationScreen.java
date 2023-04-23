@@ -48,47 +48,43 @@ public class ConfirmationScreen extends AppCompatActivity {
         String confirmCode = codeField.getText().toString().trim();
 
         //Validate the code
-        if(confirmCode.length() != 6){
+        if (confirmCode.length() != 6) {
             notProperLength();
             return;
-        }
-        else {
+        } else {
 
-            Amplify.Auth.confirmSignUp(
-                    email, confirmCode,
-                    new Consumer<AuthSignUpResult>() {
-                        @Override
-                        public void accept(@NonNull AuthSignUpResult result) {
-                            Log.i("AWS_AUTH_SUCCESS", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete");
+            Amplify.Auth.confirmSignUp(email, confirmCode, new Consumer<AuthSignUpResult>() {
+                @Override
+                public void accept(@NonNull AuthSignUpResult result) {
+                    Log.i("AWS_AUTH_SUCCESS", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete");
 
-                            //Hide the damn keyboard
-                            hideKeyboard();
+                    //Hide the damn keyboard
+                    hideKeyboard();
 
-                            //Clear any errors
-                            clearErrors();
+                    //Clear any errors
+                    clearErrors();
 
-                            FragmentManager fm = getSupportFragmentManager();
-                            ConfirmationDialog cd = new ConfirmationDialog(view);
-                            cd.show(fm, "Thank you!");
+                    FragmentManager fm = getSupportFragmentManager();
+                    ConfirmationDialog cd = new ConfirmationDialog(view);
+                    cd.show(fm, "Thank you!");
 
-                        }
-                    },
-                    new Consumer<AuthException>() {
-                        @Override
-                        public void accept(@NonNull AuthException error) {
-                            String errorCause = error.getCause().toString();
-                            String errorException = error.toString();
+                }
+            }, new Consumer<AuthException>() {
+                @Override
+                public void accept(@NonNull AuthException error) {
+                    String errorCause = error.getCause().toString();
+                    String errorException = error.toString();
 
-                            Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
-                            Log.e("AWS_AUTH_FAIL", errorException);
+                    Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
+                    Log.e("AWS_AUTH_FAIL", errorException);
 
-                            //CodeMismatchException
-                            if(errorCause.contains("CodeMismatchException")){
-                                CME();
-                            }
+                    //CodeMismatchException
+                    if (errorCause.contains("CodeMismatchException")) {
+                        CME();
+                    }
 
-                        }
-                    });
+                }
+            });
 
         }
 
@@ -116,7 +112,7 @@ public class ConfirmationScreen extends AppCompatActivity {
         });
     }
 
-    private void clearErrors(){
+    private void clearErrors() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

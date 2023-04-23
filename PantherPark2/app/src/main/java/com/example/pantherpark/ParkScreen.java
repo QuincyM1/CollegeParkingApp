@@ -42,7 +42,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     FusedLocationProviderClient f;
     LatLng selection = new LatLng(0, 0);
 
-    LatLng InitialPosition = new LatLng(0,0);
+    LatLng InitialPosition = new LatLng(0, 0);
     GoogleMap mMap;
 
     @Override
@@ -96,8 +96,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
                     clearMarker(mMap);
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
                     resetPosition(mMap);
-                }
-                else {
+                } else {
                     clearMarker(mMap);
                     selection = deck.getLatLng();
                     makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
@@ -144,7 +143,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         f.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location != null){
+                if (location != null) {
                     LatLng InitialPosition = new LatLng(location.getLatitude(), location.getLongitude());
                 }
             }

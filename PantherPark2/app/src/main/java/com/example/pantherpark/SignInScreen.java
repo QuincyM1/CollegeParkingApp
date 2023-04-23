@@ -50,7 +50,7 @@ public class SignInScreen extends AppCompatActivity {
 
     }
 
-    public void signIn(View view){
+    public void signIn(View view) {
 
         email = emailField.getText().toString().trim();
         password = passwordField.getText().toString().trim();
@@ -59,58 +59,53 @@ public class SignInScreen extends AppCompatActivity {
         clearErrors();
 
         // Authenticate with the backend server
-        Amplify.Auth.signIn(
-                email,
-                password,
-                new Consumer<AuthSignInResult>() {
-                    @Override
-                    public void accept(@NonNull AuthSignInResult result) {
-                        Log.i("AWS_AUTH_SUCCESS", result.isSignedIn() ? "Sign in succeeded" : "Sign in not complete");
+        Amplify.Auth.signIn(email, password, new Consumer<AuthSignInResult>() {
+            @Override
+            public void accept(@NonNull AuthSignInResult result) {
+                Log.i("AWS_AUTH_SUCCESS", result.isSignedIn() ? "Sign in succeeded" : "Sign in not complete");
 
-                        //Hide the damn keyboard
-                        hideKeyboard();
+                //Hide the damn keyboard
+                hideKeyboard();
 
-                        //Clear error label of any errors, if applicable
-                        clearErrors();
+                //Clear error label of any errors, if applicable
+                clearErrors();
 
-                        // Go to homepage if all sign in is a success
-                        Intent intent = new Intent(getApplicationContext(), ParkScreen.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                },
-                new Consumer<AuthException>() {
-                    @Override
-                    public void accept(@NonNull AuthException error) {
+                // Go to homepage if all sign in is a success
+                Intent intent = new Intent(getApplicationContext(), ParkScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        }, new Consumer<AuthException>() {
+            @Override
+            public void accept(@NonNull AuthException error) {
 
-                        String errorCause = error.getCause().toString();
-                        String errorException = error.toString();
+                String errorCause = error.getCause().toString();
+                String errorException = error.toString();
 
-                        Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
-                        Log.e("AWS_AUTH_FAIL", errorException);
+                Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
+                Log.e("AWS_AUTH_FAIL", errorException);
 
-                        //NotAuthorizedException
-                        if(errorCause.contains("NotAuthorizedException")) {
-                            //Alert user that they entered incorrect password
-                            NTE();
-                        }
-                        //UserNotFoundException
-                        else if(errorCause.contains("UserNotFoundException")) {
-                            //Alert user that username of that email not found, register if needed.
-                            UNFE();
-                        }
-                        //InvalidParameterException
-                        else if(errorCause.contains("InvalidParameterException")) {
-                            //Alert user that username is missing
-                            IPE();
-                        }
-                    }
+                //NotAuthorizedException
+                if (errorCause.contains("NotAuthorizedException")) {
+                    //Alert user that they entered incorrect password
+                    NTE();
                 }
-        );
+                //UserNotFoundException
+                else if (errorCause.contains("UserNotFoundException")) {
+                    //Alert user that username of that email not found, register if needed.
+                    UNFE();
+                }
+                //InvalidParameterException
+                else if (errorCause.contains("InvalidParameterException")) {
+                    //Alert user that username is missing
+                    IPE();
+                }
+            }
+        });
 
     }
 
-    public void goToSignUp(View view){
+    public void goToSignUp(View view) {
 
         //Go to signup screen
         Intent intent = new Intent(getApplicationContext(), SignUpScreen.class);
@@ -118,7 +113,7 @@ public class SignInScreen extends AppCompatActivity {
 
     }
 
-    private void clearErrors(){
+    private void clearErrors() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -148,8 +143,7 @@ public class SignInScreen extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                errorLabel.setText("Unknown Email - Please enter a registered email" +
-                        "\nor sign up.");
+                errorLabel.setText("Unknown Email - Please enter a registered email" + "\nor sign up.");
             }
         });
     }

@@ -82,59 +82,53 @@ public class SignUpScreen extends AppCompatActivity {
         if (passLenCheck && passLowerUpperNumberCheck && passMatchConfirmCheck) {
 
             // Add code here to register the user with the backend server
-            AuthSignUpOptions options = AuthSignUpOptions.builder()
-                    .userAttribute(AuthUserAttributeKey.email(), email)
-                    .userAttribute(AuthUserAttributeKey.name(), name)
-                    .build();
+            AuthSignUpOptions options = AuthSignUpOptions.builder().userAttribute(AuthUserAttributeKey.email(), email).userAttribute(AuthUserAttributeKey.name(), name).build();
 
 
-            Amplify.Auth.signUp(
-                    email, password, options,
-                    new Consumer<AuthSignUpResult>() {
-                        @Override
-                        public void accept(@NonNull AuthSignUpResult result) {
+            Amplify.Auth.signUp(email, password, options, new Consumer<AuthSignUpResult>() {
+                @Override
+                public void accept(@NonNull AuthSignUpResult result) {
 
-                            Log.i("AWS_AUTH_SUCCESS", "Result: " + result.toString());
+                    Log.i("AWS_AUTH_SUCCESS", "Result: " + result.toString());
 
-                            //Hide the damn keyboard
-                            hideKeyboard();
+                    //Hide the damn keyboard
+                    hideKeyboard();
 
-                            //Clear any errors
-                            clearErrors();
+                    //Clear any errors
+                    clearErrors();
 
-                            //Remove Sign In screen from activity stack
-                            SignInScreen.signinactivity.finish();
+                    //Remove Sign In screen from activity stack
+                    SignInScreen.signinactivity.finish();
 
-                            Intent intent = new Intent(getApplicationContext(), ConfirmationScreen.class);
-                            intent.putExtra("EMAIL", email);
-                            startActivity(intent);
-                            finish();
-                        }
-                    },
-                    new Consumer<AuthException>() {
-                        @Override
-                        public void accept(@NonNull AuthException error) {
+                    Intent intent = new Intent(getApplicationContext(), ConfirmationScreen.class);
+                    intent.putExtra("EMAIL", email);
+                    startActivity(intent);
+                    finish();
+                }
+            }, new Consumer<AuthException>() {
+                @Override
+                public void accept(@NonNull AuthException error) {
 
-                            String errorCause = error.getCause().toString();
-                            String errorException = error.toString();
+                    String errorCause = error.getCause().toString();
+                    String errorException = error.toString();
 
-                            Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
-                            Log.e("AWS_AUTH_FAIL", errorException);
+                    Log.e("AWS_AUTH_FAIL_CAUSE", errorCause);
+                    Log.e("AWS_AUTH_FAIL", errorException);
 
-                            // UsernameExistsException
-                            if(errorCause.contains("UsernameExistsException")){
-                                // Alert user email already registered
-                                UEE();
-                            }
-                            // InvalidParameterException
-                            else if(errorCause.contains("InvalidParameterException")) {
-                                //Alert user to input proper email
-                                IPE();
-                            }
-                            //
+                    // UsernameExistsException
+                    if (errorCause.contains("UsernameExistsException")) {
+                        // Alert user email already registered
+                        UEE();
+                    }
+                    // InvalidParameterException
+                    else if (errorCause.contains("InvalidParameterException")) {
+                        //Alert user to input proper email
+                        IPE();
+                    }
+                    //
 
-                        }
-                    });
+                }
+            });
 
         } else {
             return;
@@ -154,7 +148,7 @@ public class SignUpScreen extends AppCompatActivity {
     /**
      * InvalidParameterException
      */
-    private void IPE(){
+    private void IPE() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -166,7 +160,7 @@ public class SignUpScreen extends AppCompatActivity {
     /**
      * UsernameExistsException
      */
-    private void UEE(){
+    private void UEE() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
