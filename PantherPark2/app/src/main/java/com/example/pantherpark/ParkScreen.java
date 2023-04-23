@@ -161,7 +161,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     public void resetPosition(@NonNull GoogleMap googleMap) {
         //LatLng InitialPosition = new LatLng(33.7488, -84.3877);
         InitialPosition = getLocation(f);
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(14).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(10).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
             @Override
             public void onCancel() {
