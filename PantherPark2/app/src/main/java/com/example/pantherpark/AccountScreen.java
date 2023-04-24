@@ -125,16 +125,12 @@ public class AccountScreen extends AppCompatActivity {
 
     public void addSpot(View view) {
         Intent intent = new Intent(getApplicationContext(), AddParkingSpot.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
     }
 
     public void deleteSpot(View view) {
         Intent intent = new Intent(getApplicationContext(), DeleteParkingSpot.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
     }
 
 }
