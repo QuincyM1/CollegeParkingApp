@@ -34,9 +34,16 @@ public class AccountScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_screen);
+        getSupportActionBar().setTitle("Account Information");
+
+        /*
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+         */
+
+
+
 
         name = findViewById(R.id.nameLabel);
         email = findViewById(R.id.emailLabel);

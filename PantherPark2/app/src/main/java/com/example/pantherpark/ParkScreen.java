@@ -1,27 +1,25 @@
 package com.example.pantherpark;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.pantherpark.dbinterface.DBManager;
 import com.example.pantherpark.dbinterface.DeckData;
+import com.example.pantherpark.sensorservice.VirtualSensorService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -29,6 +27,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -49,6 +48,12 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     LatLng InitialPosition;
     GoogleMap mMap;
 
+    private TextView available;
+    private TextView unavailable;
+    private TextView total;
+
+    private MapView gmapcontainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,6 +63,12 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+        available = findViewById(R.id.available);
+        unavailable = findViewById(R.id.unavailable);
+        total = findViewById(R.id.total);
+
+        gmapcontainer = findViewById(R.id.map);
 
         //check permissions for map
         //set up map
@@ -101,13 +112,28 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
                 if (adapterView.getItemAtPosition(i).equals("Select a Destination")) {
                     clearMarker(mMap);
                     Toast.makeText(adapter.getContext(), "Please Select a Destination", Toast.LENGTH_SHORT).show();
+
+                    setMargins(gmapcontainer, 0, 48, 0, 0);
+
+                    available.setText(" ");
+                    unavailable.setText(" ");
+                    total.setText(" ");
+
                     resetPosition(mMap);
-                }
-                else {
+                } else {
                     clearMarker(mMap);
                     selection = deck.getLatLng();
                     resetPosition(mMap);
                     makePosition(mMap, selection, adapterView.getItemAtPosition(i).toString());
+
+                    VirtualSensorService vss = new VirtualSensorService();
+                    int[] spotStats = vss.howManySpotsAvailable(adapterView.getItemAtPosition(i).toString());
+
+                    available.setText("Open: " + spotStats[0]);
+                    unavailable.setText("Taken: " + spotStats[1]);
+                    total.setText("Total Spots: " + spotStats[2]);
+
+                    setMargins(gmapcontainer, 0, 96, 0, 0);
                 }
 
                 /*if (adapterView.getItemAtPosition(i).equals("B Deck")) {
@@ -133,10 +159,23 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
     }
 
+    public void setMargins(View v, float l, float t, float r, float b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, l, getApplicationContext().getResources().getDisplayMetrics()),
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, t, getApplicationContext().getResources().getDisplayMetrics()),
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, r, getApplicationContext().getResources().getDisplayMetrics()),
+                    (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, b, getApplicationContext().getResources().getDisplayMetrics())
+            );
+            v.requestLayout();
+        }
+    }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         LatLng InitialPosition = new LatLng(33.7488, -84.3877);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 12));
         mMap = googleMap;
     }
 
@@ -159,8 +198,8 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     }
 
     public void resetPosition(@NonNull GoogleMap googleMap) {
-        //LatLng InitialPosition = new LatLng(33.7488, -84.3877);
-        InitialPosition = getLocation(f);
+        LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+        //InitialPosition = getLocation(f);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(10).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
             @Override
@@ -213,7 +252,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         f.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if (location != null){
+                if (location != null) {
                     InitialPosition = new LatLng(location.getLatitude(), location.getLongitude());
                 }
             }
