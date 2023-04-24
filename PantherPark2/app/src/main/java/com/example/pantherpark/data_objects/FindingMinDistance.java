@@ -5,15 +5,15 @@ import com.example.pantherpark.dbinterface.*;
 public class FindingMinDistance {
 
 
-    public  void printCoordinates(LatLng coordinates, String name) {
-        System.out.println("Name: " + name);
-        System.out.println("Longitude: " + coordinates.longitude);
-        System.out.println("Latitude: " + coordinates.latitude);
+    public  void printCoordinates(DeckData deck) {
+        System.out.println("Name: " + deck.getDeckName());
+        System.out.println("Longitude: " + deck.getLongitude());
+        System.out.println("Latitude: " + deck.getLatitude());
     }
-    public double distance(LatLng deck, LatLng destination) {
-        double lat1 = deck.latitude;
+    public double distance(DeckData deck, LatLng destination) {
+        double lat1 = deck.getLatitude();
         double lat2 = destination.latitude;
-        double lon1 = deck.longitude;
+        double lon1 = deck.getLongitude();
         double lon2 = destination.longitude;
         //We are ignoring height difference when calculating distance for distance using lat and long
         double height = 0;
@@ -33,7 +33,7 @@ public class FindingMinDistance {
         return Math.sqrt(distance);
     }
 
-    public LatLng minDistance(ArrayList<LatLng> decks, LatLng destination, ArrayList<String> name) {
+    public DeckData minDistance(ArrayList<DeckData> decks, LatLng destination) {
         double min = Integer.MAX_VALUE;
         for (int i = 0; i < decks.size(); i++) {
             double temp = distance(decks.get(i), destination);
@@ -42,6 +42,7 @@ public class FindingMinDistance {
             }
         }
 
+
         for(int i = 0; i < decks.size(); i++) {
             double temp = distance(decks.get(i), destination);
             if (temp == min) {
@@ -49,6 +50,6 @@ public class FindingMinDistance {
             }
         }
 
-        return destination;
+        return decks.get(0);
     }
 }
