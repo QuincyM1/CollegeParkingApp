@@ -2,6 +2,7 @@ package com.example.pantherpark;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -10,13 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.example.pantherpark.data_objects.FindingMinDistance;
 import com.example.pantherpark.dbinterface.DBManager;
 import com.example.pantherpark.dbinterface.DeckData;
 import com.example.pantherpark.sensorservice.VirtualSensorService;
@@ -37,6 +41,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.ArrayList;
+
 public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
@@ -44,7 +50,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
     FusedLocationProviderClient f;
     LatLng selection = new LatLng(0, 0);
-
+    Button button;
     LatLng InitialPosition;
     GoogleMap mMap;
 
@@ -53,6 +59,9 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     private TextView total;
 
     private MapView gmapcontainer;
+
+    DBManager dbmg = new DBManager();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +164,17 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
             }
         });
+        FindingMinDistance r = new FindingMinDistance();
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<DeckData> decks = dbmg.getDecks();
+                DeckData currentDeck;
+                currentDeck = r.minDistance(decks, getLocation(f));
+                Toast.makeText(ParkScreen.this, currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -192,11 +212,11 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
 
                 @Override
                 public void onFinish() {
-                    //Do nothing
+
                 }
             });
             //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
-            googleMap.addMarker(new MarkerOptions().position(selection).title(s));
+            googleMap.addMarker(new MarkerOptions().position(LL).title(s));
         }
 
     }
@@ -222,51 +242,51 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
         }
     }
 
-    public void clearMarker(GoogleMap googleMap) {
-
-        if (googleMap != null) {
-            googleMap.clear();
+        public void clearMarker (GoogleMap googleMap){
+            if (googleMap != null) {
+                googleMap.clear();
+            }
         }
-    }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-    @SuppressLint("MissingPermission")
-    public LatLng getLocation(FusedLocationProviderClient f) {
-        LocationRequest mLocationRequest = LocationRequest.create();
-        mLocationRequest.setInterval(60000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        LocationCallback mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    if (location != null) {
-                        //TODO: UI updates.
+        @SuppressLint("MissingPermission")
+        public LatLng getLocation (FusedLocationProviderClient f) {
+            LocationRequest mLocationRequest = LocationRequest.create();
+            mLocationRequest.setInterval(60000);
+            mLocationRequest.setFastestInterval(5000);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            LocationCallback mLocationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    if (locationResult == null) {
+                        return;
+                    }
+                    for (Location location : locationResult.getLocations()) {
+                        if (location != null) {
+                            //TODO: UI updates.
+                        }
                     }
                 }
-            }
-        };
-        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
-        f.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    InitialPosition = new LatLng(location.getLatitude(), location.getLongitude());
+            };
+            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(mLocationRequest, mLocationCallback, null);
+            f.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        InitialPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                    }
                 }
-            }
-        });
-        return InitialPosition;
+            });
+            return InitialPosition;
+        }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

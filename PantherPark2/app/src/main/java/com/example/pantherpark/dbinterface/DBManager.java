@@ -305,7 +305,7 @@ public class DBManager {
     }
 
 
-    private ArrayList<DeckData> getDecks() {
+    public ArrayList<DeckData> getDecks() {
 
         ArrayList<DeckData> decks = new ArrayList<>(0);
 
