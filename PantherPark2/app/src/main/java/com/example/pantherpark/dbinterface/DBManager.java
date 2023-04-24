@@ -328,22 +328,22 @@ public class DBManager {
         */
 
 
-        decks.add(new DeckData("f9f1484f-b7ff-4bf6-ac32-1e691a1993df", "75 Piedmont", 33.7566242, -84.3821152));
-        decks.add(new DeckData("9162f4c6-b2be-4ab8-b8e6-ee6fe55ed43f", "A Deck", 33.7559434, -84.3863913));
-        decks.add(new DeckData("1a097866-d27b-4ba1-a92f-a641b7e42cba", "B Deck", 33.7521941, -84.3856621));
-        decks.add(new DeckData("bd1a5b5e-ab3b-4ae5-ae87-27000fef8ab4", "Blue Lot", 33.7411784, -84.3893642));
-        decks.add(new DeckData("37ec32fd-9b81-438d-8de5-4ca57c70709d", "C Deck", 33.8151083, -84.4641607));
-        decks.add(new DeckData("986674de-c450-4212-997b-6d482db05d52", "College of Law", 33.7567693, -84.3872065));
-        decks.add(new DeckData("671d8855-fa4a-49b2-a7f2-9bf714f10990", "G Deck", 33.755711, -84.3883717));
-        decks.add(new DeckData("2c65e851-d2e1-4f75-9aad-2475882ef5aa", "Green Lot", 33.7392246, -84.3911536));
-        decks.add(new DeckData("5f372502-9e7a-477e-bc5a-71e99df4d48c", "I Deck", 33.7537332, -84.387109));
-        decks.add(new DeckData("fa5cae66-742d-4843-b954-5dfec88f552e", "K Deck", 33.752013, -84.3830275));
-        decks.add(new DeckData("6169c1e9-2c6a-4549-8cf5-b2ebd9211356", "M Deck", 33.7532309, -84.3840572));
-        decks.add(new DeckData("59bd8113-59bd-4cc4-82f7-77703db8373c", "N Deck", 33.7567378, -84.3824033));
-        decks.add(new DeckData("60f4dae0-6d86-4960-a132-7660d2bfbea6", "S Deck", 33.752013, -84.3830275));
-        decks.add(new DeckData("703521ef-0f78-4725-83d4-9ee566430257", "T Deck", 33.7552125, -84.3869758));
-        decks.add(new DeckData("2307b634-24a7-497f-8a56-8ac9faa3641e", "U Deck", 33.7526653, -84.3873661));
-        decks.add(new DeckData("1be02d01-cd51-472f-ab19-bfe54fb2f454", "W Deck", 33.7564253, -84.3822423));
+        decks.add(new DeckData("f9f1484f-b7ff-4bf6-ac32-1e691a1993df", "75 Piedmont Deck", 33.75665987406272, -84.38212324802741));
+        decks.add(new DeckData("9162f4c6-b2be-4ab8-b8e6-ee6fe55ed43f", "A Deck", 33.75576302723379, -84.38631354806327));
+        decks.add(new DeckData("1a097866-d27b-4ba1-a92f-a641b7e42cba", "B Lot", 33.75204738910785, -84.38556976055142));
+        decks.add(new DeckData("bd1a5b5e-ab3b-4ae5-ae87-27000fef8ab4", "Blue Lot", 33.74146240567068, -84.39012849828357));
+        decks.add(new DeckData("37ec32fd-9b81-438d-8de5-4ca57c70709d", "C Lot", 33.7525960858909, -84.38646883322117));
+        decks.add(new DeckData("986674de-c450-4212-997b-6d482db05d52", "College of Law (V Lot)", 33.75696812880927, -84.38649904113929));
+        decks.add(new DeckData("671d8855-fa4a-49b2-a7f2-9bf714f10990", "G Deck", 33.752347176335455, -84.3881131100621));
+        decks.add(new DeckData("2c65e851-d2e1-4f75-9aad-2475882ef5aa", "Green Lot", 33.7392521353277, -84.39111148700601));
+        decks.add(new DeckData("5f372502-9e7a-477e-bc5a-71e99df4d48c", "I Lot", 33.753761449610536, -84.38720698511071));
+        decks.add(new DeckData("fa5cae66-742d-4843-b954-5dfec88f552e", "K Deck", 33.75104896701397, -84.38432481991343));
+        decks.add(new DeckData("6169c1e9-2c6a-4549-8cf5-b2ebd9211356", "M Deck", 33.75335706555732, -84.38433498217468));
+        decks.add(new DeckData("59bd8113-59bd-4cc4-82f7-77703db8373c", "N Deck", 33.751245731340276, -84.38466994083788));
+        decks.add(new DeckData("60f4dae0-6d86-4960-a132-7660d2bfbea6", "S Deck", 33.751725661084315, -84.38355043616549));
+        decks.add(new DeckData("703521ef-0f78-4725-83d4-9ee566430257", "T Deck", 33.75522103189368, -84.38688764274886));
+        decks.add(new DeckData("2307b634-24a7-497f-8a56-8ac9faa3641e", "U Lot", 33.75281232203331, -84.3873621439133));
+        decks.add(new DeckData("1be02d01-cd51-472f-ab19-bfe54fb2f454", "W Lot", 33.75640106433413, -84.38329004783893));
 
         return decks;
 

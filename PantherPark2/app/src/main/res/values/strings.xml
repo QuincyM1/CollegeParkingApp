@@ -28,22 +28,22 @@
     <!-- Spinner for HomePage Destination Dropdown -->
     <string-array name="decks">
         <item>Select a Destination</item>
-        <item>75 Piedmont</item>
+        <item>75 Piedmont Deck</item>
         <item>A Deck</item>
-        <item>B Deck</item>
-        <item>Blue Lots</item>
-        <item>C Deck</item>
-        <item>College of Law</item>
+        <item>B Lot</item>
+        <item>Blue Lot</item>
+        <item>C Lot</item>
+        <item>College of Law (V Lot)</item>
         <item>G Deck</item>
         <item>Green Lot</item>
-        <item>I Deck</item>
+        <item>I Lot</item>
         <item>K Deck</item>
         <item>M Deck</item>
         <item>N Deck</item>
         <item>S Deck</item>
         <item>T Deck</item>
-        <item>U Deck</item>
-        <item>W Deck</item>
+        <item>U Lot</item>
+        <item>W Lot</item>
     </string-array>
     <string-array name="destinations">
         <item> Select a Destination </item>

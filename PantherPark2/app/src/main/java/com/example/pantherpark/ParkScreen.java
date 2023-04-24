@@ -175,48 +175,58 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         LatLng InitialPosition = new LatLng(33.7488, -84.3877);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 12));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 10));
         mMap = googleMap;
     }
 
 
-    public void makePosition(@NonNull GoogleMap googleMap, LatLng LL, String s) {
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(LL).zoom(18).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
-            @Override
-            public void onCancel() {
+    public void makePosition(GoogleMap googleMap, LatLng LL, String s) {
 
-            }
+        if (googleMap != null) {
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(LL).zoom(18).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
+                @Override
+                public void onCancel() {
+                    //Do nothing
+                }
 
-            @Override
-            public void onFinish() {
+                @Override
+                public void onFinish() {
+                    //Do nothing
+                }
+            });
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
+            googleMap.addMarker(new MarkerOptions().position(selection).title(s));
+        }
 
-            }
-        });
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selection, 18));
-        googleMap.addMarker(new MarkerOptions().position(selection).title(s));
     }
 
-    public void resetPosition(@NonNull GoogleMap googleMap) {
-        LatLng InitialPosition = new LatLng(33.7488, -84.3877);
-        //InitialPosition = getLocation(f);
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(10).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
-            @Override
-            public void onCancel() {
+    public void resetPosition(GoogleMap googleMap) {
 
-            }
+        if (googleMap != null) {
+            LatLng InitialPosition = new LatLng(33.7488, -84.3877);
+            //InitialPosition = getLocation(f);
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(InitialPosition).zoom(10).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 1500, new GoogleMap.CancelableCallback() {
+                @Override
+                public void onCancel() {
 
-            @Override
-            public void onFinish() {
+                }
 
-            }
-        });
-        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+                @Override
+                public void onFinish() {
+
+                }
+            });
+            //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(InitialPosition, 14));
+        }
     }
 
-    public void clearMarker(@NonNull GoogleMap googleMap) {
-        googleMap.clear();
+    public void clearMarker(GoogleMap googleMap) {
+
+        if (googleMap != null) {
+            googleMap.clear();
+        }
     }
 
     @Override
