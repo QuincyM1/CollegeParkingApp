@@ -133,4 +133,10 @@ public class AccountScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void changePassword(View view) {
+        Intent intent = new Intent(getApplicationContext(), ChangePassword.class);
+        intent.putExtra("EMAIL", email.toString());
+        startActivity(intent);
+    }
+
 }

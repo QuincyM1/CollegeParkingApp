@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +16,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.PantherPark">
-
+        <activity
+            android:name=".ChangePassword"
+            android:exported="false" />
         <activity
             android:name=".ConfirmationScreen"
             android:exported="false" />
@@ -26,22 +30,20 @@
             android:exported="false" />
         <activity
             android:name=".ParkScreen"
-            android:label="Park"
-            android:exported="false"/>
+            android:exported="false"
+            android:label="Park" />
         <activity
             android:name=".AccountScreen"
-            android:label="AccountScreen"
-            android:exported="false"/>
-
+            android:exported="false"
+            android:label="AccountScreen" />
         <activity
             android:name=".AddParkingSpot"
-            android:label="addSpot"
-            android:exported="false"/>
-
+            android:exported="false"
+            android:label="addSpot" />
         <activity
             android:name=".DeleteParkingSpot"
-            android:label="deleteSpot"
-            android:exported="false"/>
+            android:exported="false"
+            android:label="deleteSpot" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

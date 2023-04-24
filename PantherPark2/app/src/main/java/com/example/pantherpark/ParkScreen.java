@@ -2,7 +2,6 @@ package com.example.pantherpark;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.example.pantherpark.data_objects.FindingMinDistance;
 import com.example.pantherpark.dbinterface.DBManager;
@@ -165,7 +163,7 @@ public class ParkScreen extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
         FindingMinDistance r = new FindingMinDistance();
-        button = findViewById(R.id.button);
+        button = findViewById(R.id.findDeckButton);
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {

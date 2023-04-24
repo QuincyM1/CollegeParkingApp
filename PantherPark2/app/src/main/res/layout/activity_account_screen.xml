@@ -63,10 +63,18 @@
             android:textColor="@color/textColorSecondary"
             android:textSize="16sp" />
 
-        <View
-            android:id="@+id/view11"
-            android:layout_width="247dp"
-            android:layout_height="16dp" />
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:clickable="false"
+            android:gravity="center"
+            android:onClick="changePassword"
+            android:text="@string/change_password"
+            android:textColor="@color/link_color"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/signOutButton"
@@ -96,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="6dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
